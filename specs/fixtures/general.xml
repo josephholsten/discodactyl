@@ -1,0 +1,22 @@
+<xrd>
+    <Subject set="beginswith">...</Subject>
+    <Alias>...</Alias>
+    <KeyDescriptor use="*">
+        <ds:KeyInfo>
+           ...
+        </ds:KeyInfo>
+    </KeyDescriptor>
+    <ds:Signature>
+        <ds:KeyInfo>
+           ...
+        </ds:KeyInfo>
+    </ds:Signature>
+    <link>
+        <rel>...</rel>
+        <uri>...</uri>
+        <Subject>...</Subject>
+        <ds:KeyInfo>
+           ...
+        </ds:KeyInfo>
+    </link>
+</xrd>

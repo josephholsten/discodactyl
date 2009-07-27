@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/xrd.rb
+lib/xrd/resource_discovery.rb
+test/test_link_header.rb
