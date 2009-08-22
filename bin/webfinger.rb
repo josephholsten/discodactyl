@@ -12,7 +12,7 @@ if ARGV.length == 0
 end
 
 # parse identifier
-acct = AcctURI.parse(ARGV[0])
+acct = URI::ACCT.parse(ARGV[0])
 
 # retrieve host-meta from host
 host_meta_res = XRD::ResourceDiscovery.get_host_meta acct.host

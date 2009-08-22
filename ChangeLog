@@ -1,5 +1,31 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
+        Change acct: URIs to implement URI::Generic.
+
+        * bin/webfinger.rb:
+        * lib/xrd/acct_uri.rb:
+        (URI::ACCT::parse):
+        (URI::ACCT::COMPONENT):
+        (URI::ACCT::build):
+        (URI::ACCT#initialize):
+        (URI::ACCT#parse_opaque):
+        (URI::ACCT#local_part):
+        (URI::ACCT#set_local_part):
+        (URI::ACCT#to_s):
+        (URI::ACCT#id):
+        (URI::ACCT#heirarchical):
+        * test/test_acct_uri.rb:
+        (TestURIAcct#test_parse_without_scheme):
+        (TestURIAcct#test_parse_with_scheme):
+        (TestURIAcct#test_parse_uri_by_scheme):
+        (TestURIAcct#test_build_from_hash):
+        (TestURIAcct#test_build_from_opaque):
+        (TestURIAcct#test_build_from_array):
+        (TestURIAcct#test_to_s):
+        (TestURIAcct#test_id):
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Add webfinger script.
         Clean up resource discovery.
 
