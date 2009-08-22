@@ -1,5 +1,21 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
+        Add webfinger script.
+        Clean up resource discovery.
+
+        * Manifest.txt:
+        * bin/webfinger.rb:
+        * lib/xrd/resource_discovery.rb:
+        (XRD::ResourceDiscovery::get_describedby_link):
+        (XRD::ResourceDiscovery::get_host_meta):
+        (XRD::ResourceDiscovery::get_describedby_from_link_header):
+        (XRD::ResourceDiscovery::get_describedby_from_html):
+        (XRD::ResourceDiscovery::parse_link_header):
+        (XRD::ResourceDiscovery::insert_name_into_hash):
+        * test/test_resource_discovery.rb:
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Fix Link parsing.
         Get linked URIs by rel.
 

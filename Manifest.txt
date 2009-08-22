@@ -3,6 +3,7 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+bin/webfinger.rb
 lib/xrd.rb
 lib/xrd/acct_uri.rb
 lib/xrd/link.rb
