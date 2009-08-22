@@ -1,4 +1,14 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
+        Add acct: URI parsing
+
+        Manifest.txt
+        lib/xrd.rb
+        lib/xrd/acct_uri.rb
+        test/test_acct_uri.rb
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Remove unused decorated XML implementation
 
         * Manifest.txt
@@ -6,6 +16,7 @@
         * lib/xrd/decorators/xrd.rb
 
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         fix typo in link header tests
 
         * test/test_link_header.rb
