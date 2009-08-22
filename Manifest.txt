@@ -1,7 +1,10 @@
+ChangeLog
 History.txt
 Manifest.txt
 README.txt
 Rakefile
 lib/xrd.rb
 lib/xrd/resource_discovery.rb
+lib/xrd/xrd.rb
 test/test_link_header.rb
+test/test_resource_discovery.rb
