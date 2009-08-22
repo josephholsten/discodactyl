@@ -9,9 +9,8 @@ module XRD
 
         namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
         link_elems = raw.xpath('/xrd:XRD/xrd:Link', namespaces)
-        doc.links = []
-        link_elems.each {|elem|
-          doc.links << XRD::Link.parse(elem)
+        doc.links = link_elems.collect {|elem|
+          XRD::Link.parse(elem)
         }
 
         doc
@@ -25,9 +24,9 @@ module XRD
     # def links_by_media_type(media_type)
     #   links.collect{|l| l.has_media_type? media_type }
     # end
-    # def uris_by_rel(rel, params = {})
-    #     links_by_rel(rel).collect{|l| l.to_uris params }.flatten
-    # end
+    def uris_by_rel(rel, params = {})
+        links_by_rel(rel).collect{|l| l.to_uris params }.flatten
+    end
     # def uris_by_media_type(media_type, params = {})
     #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
     # end

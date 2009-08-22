@@ -1,5 +1,19 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
+        Fix Link parsing.
+        Get linked URIs by rel.
+
+        * lib/xrd/link.rb:
+        (XRD::Link::parse):
+        * lib/xrd/xrd.rb:
+        (XRD::Document::parse):
+        (XRD::Document#uris_by_rel):
+        * test/test_xrd_parse.rb:
+        (TestXRDParsing#test_links_by_rel):
+        (TestXRDParsing#test_uris_by_rel):
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Add XRD Document parsing
 
         * Manifest.txt:

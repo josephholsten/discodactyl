@@ -7,10 +7,10 @@ module XRD
         link = self.new
         namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
 
-        link.rels =  map_texts(element, '//xrd:Rel', namespaces)
-        link.media_types =  map_texts(element, '//xrd:MediaType', namespaces)
-        link.uris =  map_texts(element, '//xrd:URI', namespaces)
-        link.uris = link.uris + element.xpath('//xrd:URITemplate', namespaces).map {|elem|
+        link.rels =  map_texts(element, 'xrd:Rel', namespaces)
+        link.media_types =  map_texts(element, 'xrd:MediaType', namespaces)
+        link.uris =  map_texts(element, 'xrd:URI', namespaces)
+        link.uris = link.uris + element.xpath('xrd:URITemplate', namespaces).map {|elem|
           URITemplate.new elem.text
         }
         link
