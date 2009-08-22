@@ -1,19 +1,35 @@
 require 'nokogiri'
 
 module XRD
-  class << self
-    # parse proxym    def parse(string)
-      doc = Nokogiri::XML::Document.parse(string)
-      add_decorators(doc)
+  class Document
+    class << self
+      def parse(string)
+        raw = Nokogiri(string)
+        doc = self.new
+
+        namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
+        link_elems = raw.xpath('/xrd:XRD/xrd:Link', namespaces)
+        doc.links = []
+        link_elems.each {|elem|
+          doc.links << XRD::Link.parse(elem)
+        }
+
+        doc
+      end
     end
-    
-    # Add compatibility decorators
-    def add_decorators(doc)
-      doc.decorators(XML::Document) << Decorators::Document
-      doc.decorators(XML::Node) << Decorators::Node
-      doc.decorators(XML::NodeSet) << Decorators::NodeSet
-      doc.decorate!
-      doc
+    attr_accessor :links
+    # attr_accessor :expires, :links, :subject, :aliases
+    def links_by_rel(rel)
+      @links.select{|l| l.has_rel? rel }
     end
+    # def links_by_media_type(media_type)
+    #   links.collect{|l| l.has_media_type? media_type }
+    # end
+    # def uris_by_rel(rel, params = {})
+    #     links_by_rel(rel).collect{|l| l.to_uris params }.flatten
+    # end
+    # def uris_by_media_type(media_type, params = {})
+    #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
+    # end
   end
 end

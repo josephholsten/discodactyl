@@ -15,3 +15,4 @@ test/test_link_header.rb
 test/test_resource_discovery.rb
 test/test_uri_template.rb
 test/test_xrd_link_parse.rb
+test/test_xrd_parse.rb

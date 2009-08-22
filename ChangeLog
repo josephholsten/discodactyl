@@ -1,5 +1,17 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
+        Add XRD Document parsing
+
+        * Manifest.txt:
+        * lib/xrd.rb:
+		(XRD::Document#parse):
+		(XRD::Document#links):
+		(XRD::Document#links_by_rel):
+        * lib/xrd/xrd.rb:
+        * test/test_xrd_parse.rb:
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Add XRD Link element parsing
 
         * Manifest.txt:
