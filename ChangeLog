@@ -1,5 +1,15 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
+        Add XRD Link element parsing
+
+        * Manifest.txt:
+        * lib/xrd.rb:
+        * lib/xrd/link.rb:
+        * test/test_helper.rb:
+        * test/test_xrd_link_parse.rb:
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Add XRD URI Template encoding
 
         * Manifest.txt:
