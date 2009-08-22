@@ -1,25 +1,34 @@
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
+        Add XRD URI Template encoding
+
+        * Manifest.txt:
+        * lib/xrd.rb:
+        * lib/xrd/uri_template.rb:
+        * test/test_uri_template.rb:
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
         Add acct: URI parsing
 
-        Manifest.txt
-        lib/xrd.rb
-        lib/xrd/acct_uri.rb
-        test/test_acct_uri.rb
+        * Manifest.txt:
+        * lib/xrd.rb:
+        * lib/xrd/acct_uri.rb:
+        * test/test_acct_uri.rb:
 
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
         Remove unused decorated XML implementation
 
-        * Manifest.txt
-        * lib/xrd/decorators/node.rb
-        * lib/xrd/decorators/xrd.rb
+        * Manifest.txt:
+        * lib/xrd/decorators/node.rb:
+        * lib/xrd/decorators/xrd.rb:
 
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 
         fix typo in link header tests
 
-        * test/test_link_header.rb
+        * test/test_link_header.rb:
 
 2009-08-22 Joseph Holsten <joseph@josephholsten.com>
 

@@ -1,5 +1,6 @@
-require 'xrd/resource_discovery'
 require 'xrd/acct_uri'
+require 'xrd/resource_discovery'
+require 'xrd/uri_template'
 
 # class XRD
   # VERSION = '1.0.0'
