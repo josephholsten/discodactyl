@@ -21,7 +21,7 @@ class TestLinkHeader < Test::Unit::TestCase
   end
   
   def test_parse_xrd_link
-    link = 'Link: <http://josephholsten.com/descriptor.xrd>; rel="describedby"; type="application/xrd+xml"' ->
+    link = 'Link: <http://josephholsten.com/descriptor.xrd>; rel="describedby"; type="application/xrd+xml"'
     expected = {:href => 'http://josephholsten.com/descriptor.xrd', :rel => ['describedby'], :type => 'application/xrd+xml' }
     assert_equal expected, XRD::ResourceDiscovery.parse_link_header(link)
   end

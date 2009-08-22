@@ -1,0 +1,39 @@
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+        fix typo in link header tests
+
+        * test/test_link_header.rb
+
+2009-08-22 Joseph Holsten <joseph@josephholsten.com>
+
+        remove unused rspec testing
+
+        * specs/fixtures/RSAKeyValue.xml:
+        * specs/fixtures/RetrievalMethod.xml:
+        * specs/fixtures/X509Data.xml:
+        * specs/fixtures/certs/demoCA/cacert.pem:
+        * specs/fixtures/certs/demoCA/careq.pem:
+        * specs/fixtures/certs/demoCA/crlnumber:
+        * specs/fixtures/certs/demoCA/index.txt:
+        * specs/fixtures/certs/demoCA/index.txt.attr:
+        * specs/fixtures/certs/demoCA/index.txt.attr.old:
+        * specs/fixtures/certs/demoCA/index.txt.old:
+        * specs/fixtures/certs/demoCA/newcerts/B35E1243DDA85141.pem:
+        * specs/fixtures/certs/demoCA/newcerts/B35E1243DDA85142.pem:
+        * specs/fixtures/certs/demoCA/private/cakey.pem:
+        * specs/fixtures/certs/demoCA/serial:
+        * specs/fixtures/certs/demoCA/serial.old:
+        * specs/fixtures/certs/newcert.pem:
+        * specs/fixtures/certs/newcert.pem.base64:
+        * specs/fixtures/certs/newkey.pem:
+        * specs/fixtures/certs/newreq.pem:
+        * specs/fixtures/general.xml:
+        * specs/fixtures/mine.xml:
+        * specs/fixtures/spec.xml:
+        * specs/xrd-api.rb:
+        * stories/xrd-api.rb:
+
+=== 1.0.0 / 2009-07-25
+
+* 1 major enhancement
+
+  * Add Link Header discovery
