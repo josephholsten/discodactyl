@@ -21,7 +21,8 @@ class TestXRDParsing < Test::Unit::TestCase
     links = doc.links_by_rel(rel)
 
     assert_length(1, links)
-    assert_include?(links[0].uris, URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'))
+    expected = URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}')
+    assert_include?(expected, links[0].uris)
   end
   def test_uris_by_rel
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"> <Subject match="http://docs.oasis-open.org/xri/xrd/v1.0#begins-with">http://gmail.com/</Subject> <Link> <Rel>http://webfinger.info/rel/service</Rel> <URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate> </Link> <Link> <Rel>describedby</Rel> <URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate> </Link> </XRD>'
@@ -31,6 +32,6 @@ class TestXRDParsing < Test::Unit::TestCase
     links = doc.uris_by_rel(rel, 'id' => 'dclinton@gmail.com')
 
     assert_length(1, links)
-    assert_include?(links, 'http://www.google.com/s2/webfinger/?q=dclinton@gmail.com')
+    assert_include?('http://www.google.com/s2/webfinger/?q=dclinton@gmail.com', links)
   end
 end

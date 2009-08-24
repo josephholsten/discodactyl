@@ -1,5 +1,24 @@
 2009-08-23 Joseph Holsten <joseph@josephholsten.com>
 
+        Change order of params for assert_include?
+
+		* test/test_helper.rb:
+		(Test::Unit::Assertions#assert_include?):
+		* test/test_xrd_link_parse.rb
+		(TestXRDLinkParsing#test_parse_all):
+		(TestXRDLinkParsing#test_parse_rels):
+		(TestXRDLinkParsing#test_parse_media_types):
+		(TestXRDLinkParsing#test_parse_uris):
+		(TestXRDLinkParsing#test_parse_uri_templates):
+		(TestXRDLinkParsing#test_to_uris_for_mixed_uris_and_uri_templates):
+		(TestXRDLinkParsing#test_to_uris_for_plain_uri):
+		(TestXRDLinkParsing#test_to_uris_for_uri_template):
+        * test/test_xrd_parse.rb:
+		(TestXRDParsing#test_links_rel):
+		(TestXRDParsing#test_uris_by_rel):
+
+2009-08-23 Joseph Holsten <joseph@josephholsten.com>
+
         Fill out README.txt, fixing license.
 
 		* COPYING:

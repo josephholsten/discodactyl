@@ -14,12 +14,12 @@ class TestXRDLinkParsing < Test::Unit::TestCase
 
     assert_not_nil(link)
     assert_length(1, link.rels)
-    assert_include?(link.rels, 'http://webfinger.info/rel/service')
+    assert_include?('http://webfinger.info/rel/service', link.rels)
     assert_length(1, link.media_types)
-    assert_include?(link.media_types, 'text/html')
+    assert_include?('text/html', link.media_types)
     assert_length(2, link.uris)
-    assert_include?(link.uris, 'http://host.example')
-    assert_include?(link.uris, URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'))
+    assert_include?('http://host.example', link.uris)
+    assert_include?(URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.uris)
   end
 
   def test_parse_empty
@@ -38,7 +38,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     link = XRD::Link.parse(elem)
 
     assert_length(1, link.rels)
-    assert_include?(link.rels, 'http://webfinger.info/rel/service')
+    assert_include?('http://webfinger.info/rel/service', link.rels)
   end
 
   def test_parse_media_types
@@ -48,7 +48,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     link = XRD::Link.parse(elem)
 
     assert_length(1, link.media_types)
-    assert_include?(link.media_types, 'text/html')
+    assert_include?('text/html', link.media_types)
   end
 
   def test_parse_uris
@@ -58,7 +58,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     link = XRD::Link.parse(elem)
 
     assert_length(1, link.uris)
-    assert_include?(link.uris, 'http://host.example')
+    assert_include?('http://host.example', link.uris)
   end
 
   def test_parse_uri_templates
@@ -68,7 +68,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     link = XRD::Link.parse(elem)
 
     assert_length(1, link.uris)
-    assert_include?(link.uris, URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'))
+    assert_include?(URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.uris)
   end
 
   def test_to_uris_for_mixed_uris_and_uri_templates
@@ -79,8 +79,8 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     uris = link.to_uris 'id' => 'bob@gmail.com'
 
     assert_length(2, uris)
-    assert_include?(uris, 'http://host.example')
-    assert_include?(uris, 'http://www.google.com/s2/webfinger/?q=bob@gmail.com')
+    assert_include?('http://host.example', uris)
+    assert_include?('http://www.google.com/s2/webfinger/?q=bob@gmail.com', uris)
   end
 
   def test_to_uris_for_plain_uri
@@ -91,7 +91,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     uris = link.to_uris
 
     assert_length(1, uris)
-    assert_include?(uris, 'http://host.example')
+    assert_include?('http://host.example', uris)
   end
 
   def test_to_uris_for_uri_template
@@ -102,7 +102,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     uris = link.to_uris 'id' => 'bob@gmail.com'
 
     assert_length(1, uris)
-    assert_include?(uris, 'http://www.google.com/s2/webfinger/?q=bob@gmail.com')
+    assert_include?('http://www.google.com/s2/webfinger/?q=bob@gmail.com', uris)
   end
 
   def test_has_media_type?

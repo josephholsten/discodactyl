@@ -4,7 +4,7 @@ module Test::Unit::Assertions
     assert_equal expected, enum.length, message
   end
 
-  def assert_include?(enum, atom, message = nil)
+  def assert_include?(atom, enum, message = nil)
     message = build_message message, '<?> does not include <?>.', enum, atom
     assert enum.include?(atom), message
   end
