@@ -1,3 +1,4 @@
+COPYING
 ChangeLog
 History.txt
 Manifest.txt

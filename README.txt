@@ -1,48 +1,60 @@
-= XRD
+= Discodactyl
 
-* FIX (url)
+* http://github.com/josephholsten/XRD.rb
+* http://josephholsten.lighthouseapp.com/projects/36040-disco
+* mailto:joseph@josephholsten.com
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Discodactyl is an experimental toolkit for XRD service discovery documents and related protocols. It includes implementations of XRD URITemplate Link-Patterns, basic site-meta support, HTTP Link header parsing, acct: URIs and a webfinger poking stick.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* XRD parsing and link finding.
+* LRDD discovery.
+* acct: URI parsing.
+* Probably filled with bugs. Don't forget your bug powder.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  # All of WebFinger! In very few, if long and pointy, lines!
+  require 'discodactyl'
+
+  acct = URI.parse 'acct:bradfitz@gmail.com'
+
+  host_meta_res = XRD::ResourceDiscovery.get_host_meta acct.host
+  host_meta = XRD::Document.parse host_meta_res
+
+  webfinger_uris = host_meta.uris_by_rel("http://webfinger.info/rel/service", 'id' => acct.id)
+  disco_doc = XRD::Document.parse(open(webfinger_uris.first))
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* nokogiri
+* hoe
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* sudo gem install discodactyl
 
 == LICENSE:
 
-(The MIT License)
+This software is also available in a permissive license. Please contact Joseph Holsten <joseph@josephholsten.com> for more information.
 
-Copyright (c) 2009 FIX
+(The GNU Affero General Public License)
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+Copyright (c) 2009 Joseph Anthony Pasquale Holsten
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
