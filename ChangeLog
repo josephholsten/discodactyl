@@ -1,5 +1,17 @@
 2009-08-23 Joseph Holsten <joseph@josephholsten.com>
 
+        Fix link parsing.
+
+		* lib/xrd/resource_discovery.rb:
+		(XRD::ResourceDiscovery::parse_link_header):
+		* test/test_link_header.rb:
+		(TestLinkHeader#test_parse_rel_and_title):
+		(TestLinkHeader#test_parse_seperated_rels):
+		(TestLinkHeader#test_parse_simple_link):
+		(TestLinkHeader#test_parse_xrd_link):
+
+2009-08-23 Joseph Holsten <joseph@josephholsten.com>
+
         Change order of params for assert_include?
 
 		* test/test_helper.rb:

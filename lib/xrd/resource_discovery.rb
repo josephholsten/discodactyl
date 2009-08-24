@@ -68,7 +68,7 @@ module XRD
 
       def parse_link_header(string)
         returning(params = {}) do
-          if string =~ /^Link:\s*<([^>]+)>(.*)$/
+          if string =~ /^<([^>]+)>(.*)$/
             params[:href] = $1
             $2.split(/;\s*/).each do |part|
               param, value = part.split '='
