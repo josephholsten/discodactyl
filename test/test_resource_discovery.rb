@@ -3,22 +3,29 @@ require "test/unit"
 require "xrd"
 
 class TestResourceDiscovery < Test::Unit::TestCase
-  def test_retrieve_remote_xrd
-    uri = 'http://josephholsten.com'
-    expected = 'http://josephholsten.com/descriptor.xrd'
-    assert_equal expected, XRD::ResourceDiscovery.get_describedby_link(uri)
+  def test_get_uris_by_rel_from_html
+    raw = '<html><head><title></title><link rel="describedby" href="http://host.example/description.xrd"></head><body></body></html>'
+
+    uris = XRD::ResourceDiscovery.get_uris_by_rel_from_html(raw, 'describedby')
+
+    assert_include? 'http://host.example/description.xrd', uris
   end
-  
-  # def test_parse_link_header
-  #   link = '<http://josephholsten.com/descriptor.xrd>; rel="describedby"; type="application/xrd+xml"'
-  #   expected = {
-  #     :content => 'http://josephholsten.com/descriptor.xrd',
-  #     :rel => 'describedby',
-  #     :type => 'application/xrd+xml'
-  #   }
-  #   assert_equal(expected, get_link(link))
-  # end
-  
-  # def test_get_site_meta
-  # end
+
+  def test_get_uris_by_rel_from_html_with_multiple_rels
+    raw = '<html><head><title></title><link rel="also describedby" href="http://host.example/description.xrd"></head><body></body></html>'
+
+    uris = XRD::ResourceDiscovery.get_uris_by_rel_from_html(raw, 'describedby')
+
+    assert_include? 'http://host.example/description.xrd', uris
+  end
+
+  def test_get_uris_by_rel_from_link_header
+    require 'ostruct'
+    header = '<http://host.example/description.xrd>; rel="describedby"'
+    response = OpenStruct.new(:meta => {'Link' => header})
+
+    uris = XRD::ResourceDiscovery.get_uris_by_rel_from_link_header(response, 'describedby')
+
+    assert_equal 'http://host.example/description.xrd', uris
+  end
 end

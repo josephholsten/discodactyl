@@ -1,5 +1,17 @@
 2009-08-23 Joseph Holsten <joseph@josephholsten.com>
 
+        Generalize link header, html discovery.
+
+		* lib/xrd/resource_discovery.rb:
+		(XRD::ResourceDiscover::get_uris_by_rel_from_html):
+		(XRD::ResourceDiscover::get_uris_by_rel_from_link_header):
+		* test/test_resource_discovery.rb:
+		(TestResourceDiscover#test_get_uris_by_rel_from_html):
+		(TestResourceDiscover#test_get_uris_by_rel_from_html_with_multiple_rels):
+		(TestResourceDiscover#test_get_uris_by_rel_from_link_header):
+
+2009-08-23 Joseph Holsten <joseph@josephholsten.com>
+
         Fix link parsing.
 
 		* lib/xrd/resource_discovery.rb:

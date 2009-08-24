@@ -48,22 +48,22 @@ module XRD
         xrd
       end
 
-      # take an HTTP response, find a link header
-      # with rel=describedby, and return its href
-      def get_describedby_from_link_header(response)
-        links = [response['Link']].flatten.collect {|link|
-          parse_link_header(link);
-        }
-        link = links.find {|l| l[:rel].include? 'describedby' }
-        xrd = link[:href]
+      # take an HTTP response with a content-type of HTML,
+      # find all links by rel, and return each href
+      def get_uris_by_rel_from_html(resource, rel)
+        doc = Nokogiri::HTML(resource)
+        links = doc.xpath("//*[contains(@rel, \"#{rel}\")]")
+        uris = links.map {|link| link['href'] }
       end
 
-      # take an HTTP response with a content-type of HTML,
-      # find a link with rel=describedby, and return its href
-      def get_describedby_from_html(resource)
-        doc = Nokogiri::HTML(resource)
-        link = doc.xpath('//*[@rel="describedby"]').first
-        xrd = link['href']
+      # take an HTTP response, find a link header
+      # with rel, and return its href
+      def get_uris_by_rel_from_link_header(response, rel)
+        links = [response.meta['Link']].flatten.collect {|link|
+          parse_link_header(link);
+        }
+        link = links.find {|l| l[:rel].include? rel }
+        xrd = link[:href]
       end
 
       def parse_link_header(string)
