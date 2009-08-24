@@ -7,12 +7,14 @@ Rakefile
 bin/webfinger.rb
 lib/xrd.rb
 lib/xrd/acct_uri.rb
+lib/xrd/host_meta.rb
 lib/xrd/link.rb
 lib/xrd/resource_discovery.rb
 lib/xrd/uri_template.rb
 lib/xrd/xrd.rb
 test/test_acct_uri.rb
 test/test_helper.rb
+test/test_host_meta.rb
 test/test_link_header.rb
 test/test_resource_discovery.rb
 test/test_uri_template.rb

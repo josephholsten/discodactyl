@@ -1,5 +1,6 @@
 require 'xrd/acct_uri'
 require 'xrd/link'
+require 'xrd/host_meta'
 require 'xrd/resource_discovery'
 require 'xrd/uri_template'
 require 'xrd/xrd'

@@ -1,5 +1,19 @@
 2009-08-23 Joseph Holsten <joseph@josephholsten.com>
 
+        Generalize host-meta discovery.
+
+		* Manifest.txt:
+		* lib/xrd.rb:
+		* lib/xrd/host_meta.rb:
+		(XRD::HostMeta::get_uri_from_uri):
+		(XRD::HostMeta::from_uri):
+		* test/test_host_meta.rb:
+		(TestHostMeta#test_get_uri_from_host):
+		(TestHostMeta#test_get_uri_from_http):
+		(TestHostMeta#test_get_uri_from_acct):
+
+2009-08-23 Joseph Holsten <joseph@josephholsten.com>
+
         Generalize link header, html discovery.
 
 		* lib/xrd/resource_discovery.rb:
