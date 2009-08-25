@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/test_helper'
 require "test/unit"
-require "xrd"
+require "discodactyl"
 
 class TestResourceDiscovery < Test::Unit::TestCase
   def test_get_uris_by_rel_from_html
     raw = '<html><head><title></title><link rel="describedby" href="http://host.example/description.xrd"></head><body></body></html>'
 
-    uris = XRD::ResourceDiscovery.get_uris_by_rel_from_html(raw, 'describedby')
+    uris = Discodactyl::ResourceDiscovery.get_uris_by_rel_from_html(raw, 'describedby')
 
     assert_include? 'http://host.example/description.xrd', uris
   end
@@ -14,12 +14,12 @@ class TestResourceDiscovery < Test::Unit::TestCase
   def test_get_uris_by_rel_from_html_with_multiple_rels
     raw = '<html><head><title></title><link rel="also describedby" href="http://host.example/description.xrd"></head><body></body></html>'
 
-    uris = XRD::ResourceDiscovery.get_uris_by_rel_from_html(raw, 'describedby')
+    uris = Discodactyl::ResourceDiscovery.get_uris_by_rel_from_html(raw, 'describedby')
 
     assert_include? 'http://host.example/description.xrd', uris
   end
 
-  def test_get_uris_by_rel_from_html
+  def test_get_uris_by_rel_from_html_via_disco
     require 'ostruct'
     raw = '<html><head><title></title><link rel="describedby" href="http://host.example/description.xrd"></head><body></body></html>'
     response = FakeResp.new(raw)
@@ -27,7 +27,7 @@ class TestResourceDiscovery < Test::Unit::TestCase
     response.content_type = 'text/html'
     uri = OpenStruct.new(:open => response)
 
-    uris = XRD::ResourceDiscovery.get_uris_by_rel(uri, 'describedby')
+    uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(uri, 'describedby')
 
     assert_include? 'http://host.example/description.xrd', uris
   end
@@ -37,7 +37,7 @@ class TestResourceDiscovery < Test::Unit::TestCase
     header = '<http://host.example/description.xrd>; rel="describedby"'
     response = OpenStruct.new(:meta => {'Link' => header})
 
-    uris = XRD::ResourceDiscovery.get_uris_by_rel_from_link_header(response, 'describedby')
+    uris = Discodactyl::ResourceDiscovery.get_uris_by_rel_from_link_header(response, 'describedby')
 
     assert_equal 'http://host.example/description.xrd', uris
   end
@@ -48,7 +48,7 @@ class TestResourceDiscovery < Test::Unit::TestCase
     response = OpenStruct.new(:meta => {'Link' => header})
     uri = OpenStruct.new(:open => response)
 
-    uris = XRD::ResourceDiscovery.get_uris_by_rel(uri, 'describedby')
+    uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(uri, 'describedby')
 
     assert_equal 'http://host.example/description.xrd', uris
   end

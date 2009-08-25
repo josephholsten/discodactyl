@@ -1,5 +1,6 @@
 require 'nokogiri'
 
+module Discodactyl
 module XRD
   class Link
     class << self
@@ -30,4 +31,5 @@ module XRD
       @uris.collect{|u| u.respond_to?('to_uri') ? u.to_uri(params) : u }
     end
   end
+end
 end

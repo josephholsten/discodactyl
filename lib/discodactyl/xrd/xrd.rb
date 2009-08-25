@@ -1,5 +1,6 @@
 require 'nokogiri'
 
+module Discodactyl
 module XRD
   class Document
     class << self
@@ -31,4 +32,5 @@ module XRD
     #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
     # end
   end
+end
 end

@@ -1,5 +1,5 @@
 require "test/unit"
-require "xrd"
+require "discodactyl"
 
 class TestURIAcct < Test::Unit::TestCase
   def test_parse_without_scheme

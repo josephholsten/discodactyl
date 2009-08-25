@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 require "test/unit"
-require "xrd"
+require "discodactyl"
 
 class TestXRDLinkParsing < Test::Unit::TestCase
   def setup
@@ -10,7 +10,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><MediaType>text/html</MediaType><Rel>http://webfinger.info/rel/service</Rel><URI>http://host.example</URI><URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_not_nil(link)
     assert_length(1, link.rels)
@@ -26,7 +26,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_not_nil(link)
   end
@@ -35,7 +35,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><Rel>http://webfinger.info/rel/service</Rel></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_length(1, link.rels)
     assert_include?('http://webfinger.info/rel/service', link.rels)
@@ -45,7 +45,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><MediaType>text/html</MediaType></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_length(1, link.media_types)
     assert_include?('text/html', link.media_types)
@@ -55,7 +55,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><URI>http://host.example</URI></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_length(1, link.uris)
     assert_include?('http://host.example', link.uris)
@@ -65,7 +65,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_length(1, link.uris)
     assert_include?(URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.uris)
@@ -74,7 +74,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
   def test_to_uris_for_mixed_uris_and_uri_templates
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><URI>http://host.example</URI><URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     uris = link.to_uris 'id' => 'bob@gmail.com'
 
@@ -86,7 +86,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
   def test_to_uris_for_plain_uri
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><URI>http://host.example</URI></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     uris = link.to_uris
 
@@ -97,7 +97,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
   def test_to_uris_for_uri_template
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     uris = link.to_uris 'id' => 'bob@gmail.com'
 
@@ -108,7 +108,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
   def test_has_media_type?
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><MediaType>text/html</MediaType></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_has_media_type?(link, 'text/html')
   end
@@ -116,7 +116,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
   def test_has_rel?
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link><Rel>http://webfinger.info/rel/service</Rel><URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate></Link></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
-    link = XRD::Link.parse(elem)
+    link = Discodactyl::XRD::Link.parse(elem)
 
     assert_has_rel?(link, 'http://webfinger.info/rel/service')
   end

@@ -1,6 +1,30 @@
 2009-08-25 Joseph Holsten <joseph@josephholsten.com>
 
-        Change README extension to .rdoc for github
+        Rename package to discodactyl.
+
+        * ChangeLog:
+        * Manifest.txt:
+        * Rakefile:
+        * bin/webfinger.rb:
+        * lib/discodactyl.rb:
+        * lib/discodactyl/acct_uri.rb:
+        * lib/discodactyl/host_meta.rb:
+        * lib/discodactyl/resource_discovery.rb:
+        * lib/discodactyl/uri_template.rb:
+        * lib/discodactyl/xrd.rb:
+        * lib/discodactyl/xrd/link.rb:
+        * lib/discodactyl/xrd/xrd.rb:
+        * test/test_acct_uri.rb:
+        * test/test_host_meta.rb:
+        * test/test_link_header.rb:
+        * test/test_resource_discovery.rb:
+        * test/test_uri_template.rb:
+        * test/test_xrd_link_parse.rb:
+        * test/test_xrd_parse.rb:
+
+2009-08-25 Joseph Holsten <joseph@josephholsten.com>
+
+        Change README extension to .rdoc for github.
 
 		* README.rdoc:
 

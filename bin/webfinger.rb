@@ -3,7 +3,7 @@ libdir = File.join(File.dirname(__FILE__), '..', 'lib')
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'rubygems'
-require 'lib/xrd'
+require 'lib/discodactyl'
 require 'open-uri'
 
 if ARGV.length == 0
@@ -16,7 +16,7 @@ acct = URI::ACCT.parse(ARGV[0])
 
 # Perform LRDD discovery on acct with the  webfinger relation
 finger_rel = "http://webfinger.info/rel/service"
-webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'id' => acct.id)
+webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'id' => acct.id)
 
 # retrieve user disco doc
 disco_res = open(webfinger_uris.first)
@@ -26,7 +26,7 @@ disco_res = open(webfinger_uris.first)
 # XRD::Documents are ugly at the moment
 # reverting to standard XML in the meantime
 ###
-#disco_doc = XRD::Document.parse disco_res
+#disco_doc = Discodactyl::XRD::Document.parse disco_res
 disco_doc = Nokogiri disco_res
 
 # pretty print

@@ -1,5 +1,5 @@
 require "test/unit"
-require "xrd"
+require "discodactyl"
 
 class TestURITemplate < Test::Unit::TestCase
   def test_render_single

@@ -1,9 +1,9 @@
 require 'open-uri'
 require 'nokogiri'
 require 'active_support'
-require 'xrd'
-# uri = URI.parse "http://josephholsten.com/"
-module XRD
+require 'discodactyl'
+
+module Discodactyl
   class ResourceDiscovery
     class << self
 
@@ -51,7 +51,7 @@ module XRD
           end
         end
         unless uris
-          host_meta = XRD::HostMeta.from_uri uri
+          host_meta = Discodactyl::HostMeta.from_uri uri
           uris = host_meta.uris_by_rel(rel, params)
         end
         uris

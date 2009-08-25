@@ -1,6 +1,6 @@
-require 'xrd/xrd'
+require 'discodactyl/xrd'
 
-module XRD
+module Discodactyl
   class HostMeta < XRD::Document
     class << self
       def get_uri_from_uri(uri)
