@@ -12,7 +12,7 @@ module URI
     def self.parse(str)
       /^(acct:)?(.*)$/ =~ str
       scheme = 'acct'
-      opaque = Regexp.last_match[2]
+      opaque = $2
       self.new(scheme, nil, nil, nil, nil, nil, opaque, nil, nil)
     end
 

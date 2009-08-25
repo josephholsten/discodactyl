@@ -1,27 +1,16 @@
 require 'open-uri'
 require 'nokogiri'
 require 'active_support'
+require 'xrd'
 # uri = URI.parse "http://josephholsten.com/"
 module XRD
   class ResourceDiscovery
     class << self
-      def get_host_meta(host)
-        host_meta_uri = 'http://'+ host + '/.well-known/host-meta'
-        open(host_meta_uri)
-      end
 
-      # Not fully implemented yet!
-      # any brilliant ideas about breaking this up are welcome
-      def get_describedby_link(uri)
-        # res = Net::HTTP.start(uri.host, uri.port){|http| http.request_get(uri.path)
+      def get_uris_by_rel(uri, rel, params = {})
         begin
-          resource = open(uri)
-
-          if resource.meta.key? 'Link'
-            xrd = get_describedby_from_link_header(resource)
-          else
-            xrd = get_describedby_from_html(resource)
-          end
+          uri = URI.parse(uri.to_s) unless uri.respond_to?('open')
+          resource = uri.open
         rescue OpenURI::HTTPError => e
           status = e.io.status[0] # => 3xx, 4xx, or 5xx
 
@@ -33,7 +22,7 @@ module XRD
           #   end
           # elsif code == "401" # HTTPUnauthorized
           #   authenticate
-          #   return get_describedby_link(uri)
+          #   return get_uris_by_rel(uri)
           # elsif code == "301" || status == "302"
           # 300        HTTPMultipleChoice
           # 301        HTTPMovedPermanently
@@ -41,11 +30,44 @@ module XRD
           # 304        HTTPNotModified
           # 305        HTTPUseProxy
           # 307        HTTPTemporaryRedirect
-          #   return get_describedby_link(resource['location'])
+          #   resource = URI.parse(resource['location']).open
           # else
-          #   get_host_meta uri.host
+        rescue NoMethodError
         end
-        xrd
+        if resource
+          # check for link headers first
+          if resource.meta.key? 'Link'
+            uris = get_uris_by_rel_from_link_header(resource, rel)
+          end
+
+          unless uris
+            # then check for links in the document
+            if content_sniff(resource) == 'text/html'
+              uris = get_uris_by_rel_from_html(resource, rel)
+            # Atom
+            elsif content_sniff(resource) == 'application/atom+xml'
+              uris = get_uris_by_rel_from_atom(resource, rel)
+            end
+          end
+        end
+        unless uris
+          host_meta = XRD::HostMeta.from_uri uri
+          uris = host_meta.uris_by_rel(rel, params)
+        end
+        uris
+      end
+
+      def lrdd_discovery(uri)
+        get_uris_by_rel(uri, 'describedby')
+      end
+
+      def content_sniff(resource)
+        if resource.content_type == 'text/html'
+          type = 'text/html'
+        elsif resource.content_type == 'application/atom+xml'
+          type = 'application/atom+xml'
+        end
+        type
       end
 
       # take an HTTP response with a content-type of HTML,

@@ -22,10 +22,7 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
   acct = URI.parse 'acct:bradfitz@gmail.com'
 
-  host_meta_res = XRD::ResourceDiscovery.get_host_meta acct.host
-  host_meta = XRD::Document.parse host_meta_res
-
-  webfinger_uris = host_meta.uris_by_rel("http://webfinger.info/rel/service", 'id' => acct.id)
+  webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, 'http://webfinger.info/rel/service', 'id' => 'acct.id')
   disco_doc = XRD::Document.parse(open(webfinger_uris.first))
 
 == REQUIREMENTS:

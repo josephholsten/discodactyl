@@ -19,6 +19,19 @@ class TestResourceDiscovery < Test::Unit::TestCase
     assert_include? 'http://host.example/description.xrd', uris
   end
 
+  def test_get_uris_by_rel_from_html
+    require 'ostruct'
+    raw = '<html><head><title></title><link rel="describedby" href="http://host.example/description.xrd"></head><body></body></html>'
+    response = FakeResp.new(raw)
+    response.meta = {}
+    response.content_type = 'text/html'
+    uri = OpenStruct.new(:open => response)
+
+    uris = XRD::ResourceDiscovery.get_uris_by_rel(uri, 'describedby')
+
+    assert_include? 'http://host.example/description.xrd', uris
+  end
+
   def test_get_uris_by_rel_from_link_header
     require 'ostruct'
     header = '<http://host.example/description.xrd>; rel="describedby"'
@@ -28,4 +41,19 @@ class TestResourceDiscovery < Test::Unit::TestCase
 
     assert_equal 'http://host.example/description.xrd', uris
   end
+
+  def test_get_uris_by_rel_from_header
+    require 'ostruct'
+    header = '<http://host.example/description.xrd>; rel="describedby"'
+    response = OpenStruct.new(:meta => {'Link' => header})
+    uri = OpenStruct.new(:open => response)
+
+    uris = XRD::ResourceDiscovery.get_uris_by_rel(uri, 'describedby')
+
+    assert_equal 'http://host.example/description.xrd', uris
+  end
+end
+
+class FakeResp < String
+  attr_accessor :meta, :content_type
 end

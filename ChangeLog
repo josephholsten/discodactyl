@@ -1,5 +1,22 @@
 2009-08-23 Joseph Holsten <joseph@josephholsten.com>
 
+        Wrap discovery components together into a generalized LRDD implementation. Update examples in README and webfinger.rb.
+
+        * README.txt:
+        * bin/webfinger.rb:
+        * lib/xrd/acct_uri.rb:
+		(URI::ACCT::parse):
+        * lib/xrd/resource_discovery.rb:
+		(XRD::ResourceDiscovery::get_uris_by_rel):
+		(XRD::ResourceDiscovery::lrdd_discovery):
+		(XRD::ResourceDiscovery::content_sniff):
+        * test/test_resource_discovery.rb:
+		(TestResourceDiscovery#test_get_uris_by_rel_from_html):
+		(TestResourceDiscovery#test_get_uris_by_rel_from_header):
+		(FakeResp):
+
+2009-08-23 Joseph Holsten <joseph@josephholsten.com>
+
         Generalize host-meta discovery.
 
 		* Manifest.txt:

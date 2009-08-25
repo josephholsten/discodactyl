@@ -14,15 +14,9 @@ end
 # parse identifier
 acct = URI::ACCT.parse(ARGV[0])
 
-# retrieve host-meta from host
-host_meta_res = XRD::ResourceDiscovery.get_host_meta acct.host
-
-# parse host_meta_doc
-host_meta_doc = XRD::Document.parse host_meta_res
-
-# Get linked URIs and URITemplates with the webfinger relation
+# Perform LRDD discovery on acct with the  webfinger relation
 finger_rel = "http://webfinger.info/rel/service"
-webfinger_uris = host_meta_doc.uris_by_rel(finger_rel, 'id' => acct.to_s)
+webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'id' => acct.id)
 
 # retrieve user disco doc
 disco_res = open(webfinger_uris.first)
