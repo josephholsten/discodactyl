@@ -1,3 +1,9 @@
+2009-08-25 Joseph Holsten <joseph@josephholsten.com>
+
+        Change README extension to .rdoc for github
+
+		* README.rdoc:
+
 2009-08-23 Joseph Holsten <joseph@josephholsten.com>
 
         Wrap discovery components together into a generalized LRDD implementation. Update examples in README and webfinger.rb.
