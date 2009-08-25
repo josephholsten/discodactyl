@@ -1,0 +1,57 @@
+= Discodactyl
+
+* http://github.com/josephholsten/XRD.rb
+* http://josephholsten.lighthouseapp.com/projects/36040-disco
+* mailto:joseph@josephholsten.com
+
+== DESCRIPTION:
+
+Discodactyl is an experimental toolkit for XRD service discovery documents and related protocols. It includes implementations of XRD URITemplate Link-Patterns, basic site-meta support, HTTP Link header parsing, acct: URIs and a webfinger poking stick.
+
+== FEATURES/PROBLEMS:
+
+* XRD parsing and link finding.
+* LRDD discovery.
+* acct: URI parsing.
+* Probably filled with bugs. Don't forget your bug powder.
+
+== SYNOPSIS:
+
+  # All of WebFinger! In very few, if long and pointy, lines!
+  require 'discodactyl'
+
+  acct = URI.parse 'acct:bradfitz@gmail.com'
+
+  webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, 'http://webfinger.info/rel/service', 'id' => 'acct.id')
+  disco_doc = XRD::Document.parse(open(webfinger_uris.first))
+
+== REQUIREMENTS:
+
+* nokogiri
+* hoe
+
+== INSTALL:
+
+* sudo gem install discodactyl
+
+== LICENSE:
+
+This software is also available in a permissive license. Please contact Joseph Holsten <joseph@josephholsten.com> for more information.
+
+(The GNU Affero General Public License)
+
+Copyright (c) 2009 Joseph Anthony Pasquale Holsten
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
