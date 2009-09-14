@@ -5,28 +5,51 @@ module XRD
   class Document
     class << self
       def parse(string)
-        raw = Nokogiri(string)
+        raw = Nokogiri::XML(string)
         doc = self.new
 
         namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
         link_elems = raw.xpath('/xrd:XRD/xrd:Link', namespaces)
         doc.links = link_elems.collect {|elem|
-          XRD::Link.parse(elem)
+          Link.parse(elem)
         }
+
+        doc.raw = raw
 
         doc
       end
     end
-    attr_accessor :links
+    attr_accessor :links, :raw
     # attr_accessor :expires, :links, :subject, :aliases
+	def escapeXPath(str)
+      inner = str.split('\'').join('\',"\'",\'')
+	  outer = 'concat(\'\',\'%s\')' % inner
+	end
+    def urielems_by_rel(rel)
+      require 'cgi'
+	  namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
+      path = "/xrd:XRD/xrd:Link[xrd:Rel=\"%s\"]/child::*[self::xrd:URI | self::xrd:URITemplate]"% rel
+#     path = "/xrd:XRD/xrd:Link[xrd:Rel=%s]/child::*[self::xrd:URI | self::xrd:URITemplate]"% escapeXPath(rel)
+#      path = "/xrd:XRD/xrd:Link[xrd:Rel=\"%s\"]/child::*[self::xrd:URI | self::xrd:URITemplate]"% CGI.escapeHTML(rel)
+      @raw.xpath path, namespaces
+    end
+     def linkelems_by_rel(rel)
+      require 'cgi'
+	  namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
+      path = "/xrd:XRD/xrd:Link[xrd:Rel=\"%s\"]"% rel
+      path = "/xrd:XRD/xrd:Link[xrd:Rel=%s]"% escapeXPath(rel)
+#	  puts "XPath: %s" % path
+#      path = "/xrd:XRD/xrd:Link[xrd:Rel='%s']"% CGI.escapeHTML(rel)
+      @raw.xpath path, namespaces
+    end
     def links_by_rel(rel)
-      @links.select{|l| l.has_rel? rel }
+      linkelems_by_rel(rel).map {|e| Link.parse(e) }
     end
     # def links_by_media_type(media_type)
     #   links.collect{|l| l.has_media_type? media_type }
     # end
     def uris_by_rel(rel, params = {})
-        links_by_rel(rel).collect{|l| l.to_uris params }.flatten
+        links_by_rel(rel).map {|l| l.to_uris(params) }.flatten
     end
     # def uris_by_media_type(media_type, params = {})
     #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten

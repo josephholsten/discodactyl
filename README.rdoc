@@ -1,7 +1,7 @@
 = Discodactyl
 
-* http://github.com/josephholsten/XRD.rb
-* http://josephholsten.lighthouseapp.com/projects/36040-disco
+* http://github.com/josephholsten/discodactyl
+* http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
 * mailto:joseph@josephholsten.com
 
 == DESCRIPTION:
@@ -22,7 +22,7 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
   acct = URI.parse 'acct:bradfitz@gmail.com'
 
-  webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, 'http://webfinger.info/rel/service', 'id' => 'acct.id')
+  webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, 'http://webfinger.info/rel/service', 'id' => acct.id)
   disco_doc = XRD::Document.parse(open(webfinger_uris.first))
 
 == REQUIREMENTS:

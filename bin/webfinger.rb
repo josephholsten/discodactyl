@@ -18,7 +18,10 @@ acct = URI::ACCT.parse(ARGV[0])
 finger_rel = "http://webfinger.info/rel/service"
 webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'id' => acct.id)
 
+raise "URI didn't have any linked webfinger URIs" if webfinger_uris.empty?
+
 # retrieve user disco doc
+require 'prettyprint'
 disco_res = open(webfinger_uris.first)
 
 # parse disco doc
@@ -27,7 +30,7 @@ disco_res = open(webfinger_uris.first)
 # reverting to standard XML in the meantime
 ###
 #disco_doc = Discodactyl::XRD::Document.parse disco_res
-disco_doc = Nokogiri disco_res
+disco_doc = Nokogiri::XML disco_res
 
 # pretty print
 puts disco_doc
