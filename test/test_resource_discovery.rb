@@ -6,7 +6,7 @@ $LOAD_PATH.unshift(testdir) unless $LOAD_PATH.include?(testdir)
 
 require 'test_helper'
 require "test/unit"
-require "discodactyl"
+require "discodactyl/resource_discovery"
 
 class TestResourceDiscovery < Test::Unit::TestCase
   def test_get_uris_by_rel_from_html
