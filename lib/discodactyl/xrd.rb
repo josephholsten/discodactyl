@@ -1,2 +1,2 @@
-require 'discodactyl/xrd/xrd'
+require 'discodactyl/xrd/document'
 require 'discodactyl/xrd/link'
