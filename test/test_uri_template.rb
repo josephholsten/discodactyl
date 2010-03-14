@@ -3,7 +3,7 @@ libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require "test/unit"
-require "discodactyl"
+require "discodactyl/uri_template"
 
 class TestURITemplate < Test::Unit::TestCase
   def test_render_encode_uri
