@@ -65,6 +65,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     link = Discodactyl::XRD::Link.parse(elem)
 
     assert_equal URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.template
+    assert_nil link.href
   end
 
   def test_ignores_template_when_href_exists
