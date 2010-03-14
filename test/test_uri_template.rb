@@ -6,6 +6,14 @@ require "test/unit"
 require "discodactyl"
 
 class TestURITemplate < Test::Unit::TestCase
+  def test_render_encode_uri
+    t = URITemplate.new('http://example.org?q={uri}')
+    assert_equal('http://example.org?q=http%3A%2F%2Fexample.com%2Fr%3Ff%3D1', t.to_uri('uri' => URI.parse('http://example.com/r?f=1')))
+  end
+  def test_render_encode
+    t = URITemplate.new('http://example.org?q={uri}')
+    assert_equal('http://example.org?q=http%3A%2F%2Fexample.com%2Fr%3Ff%3D1', t.to_uri('uri' => 'http://example.com/r?f=1'))
+  end
   def test_render_single
     t = URITemplate.new('http://host.example/{%id}')
     assert_equal('http://host.example/test', t.to_uri('id' => 'test'))

@@ -4,9 +4,13 @@ class URITemplate
     @pattern = pattern
   end
   def to_uri(params)
+    require 'cgi'
     uri = @pattern
     while /\{%([^}]*)\}/ =~ uri
       uri.gsub!($~[0], params[$~[1]])
+    end
+    while /\{([^}]*)\}/ =~ uri
+      uri.gsub!($~[0], CGI::escape(params[$~[1]].to_s))
     end
     uri
   end
