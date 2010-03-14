@@ -25,21 +25,9 @@ module XRD
       inner = str.split('\'').join('\',"\'",\'')
 	  outer = 'concat(\'\',\'%s\')' % inner
 	end
-    def urielems_by_rel(rel)
-      require 'cgi'
-	  namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
-      path = "/xrd:XRD/xrd:Link[xrd:Rel=\"%s\"]/child::*[self::xrd:URI | self::xrd:URITemplate]"% rel
-#     path = "/xrd:XRD/xrd:Link[xrd:Rel=%s]/child::*[self::xrd:URI | self::xrd:URITemplate]"% escapeXPath(rel)
-#      path = "/xrd:XRD/xrd:Link[xrd:Rel=\"%s\"]/child::*[self::xrd:URI | self::xrd:URITemplate]"% CGI.escapeHTML(rel)
-      @raw.xpath path, namespaces
-    end
-     def linkelems_by_rel(rel)
-      require 'cgi'
-	  namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
-      path = "/xrd:XRD/xrd:Link[xrd:Rel=\"%s\"]"% rel
-      path = "/xrd:XRD/xrd:Link[xrd:Rel=%s]"% escapeXPath(rel)
-#	  puts "XPath: %s" % path
-#      path = "/xrd:XRD/xrd:Link[xrd:Rel='%s']"% CGI.escapeHTML(rel)
+    def linkelems_by_rel(rel)
+      namespaces = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
+      path = "/xrd:XRD/xrd:Link[@rel=%s]"% escapeXPath(rel)
       @raw.xpath path, namespaces
     end
     def links_by_rel(rel)

@@ -49,14 +49,8 @@ class TestXRDParsing < Test::Unit::TestCase
     doc = Discodactyl::XRD::Document.parse <<eos
 <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
   <Subject>http://host.example/</Subject>
-  <Link>
-	<Rel>describedby</Rel>
-	<URI>http://host.example/endpoint</URI>
-  </Link>
-  <Link>
-	<Rel>describedby</Rel>
-	<URITemplate>http://host.example/descriptor?q={%id}</URITemplate>
-  </Link>
+  <Link rel="describedby" href="http://host.example/endpoint"/>
+  <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
  </XRD>
 eos
 
@@ -64,70 +58,27 @@ eos
 
     assert_length(2, link_elems)
 
-	ns = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
-	uri = link_elems[0].xpath('./xrd:URI', ns)
-	assert_equal('http://host.example/endpoint', uri.text, "First Link URI")
-
-	template = link_elems[1].xpath('./xrd:URITemplate', ns)
-	assert_equal('http://host.example/descriptor?q={%id}', template.text, "Second link URITemplate")
+    assert_equal 'http://host.example/endpoint', link_elems[0]['href']
+    assert_equal 'http://host.example/descriptor?q={%id}', link_elems[1]['template']
   end
 
   def test_linkelems_by_rel_with_multiple_rels
     doc = Discodactyl::XRD::Document.parse <<eos
 <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
   <Subject>http://host.example/</Subject>
-  <Link>
-	<Rel>webfinger</Rel>
-	<Rel>describedby</Rel>
-	<URI>http://host.example/endpoint</URI>
-  </Link>
-  <Link>
-	<Rel>feed</Rel>
-	<Rel>describedby</Rel>
-	<URITemplate>http://host.example/descriptor?q={%id}</URITemplate>
-  </Link>
+  <Link rel="webfinger" href="http://host.example/endpoint"/>
+  <Link rel="describedby" href="http://host.example/endpoint"/>
+  <Link rel="feed" template="http://host.example/descriptor?q={%id}"/>
+  <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
  </XRD>
 eos
 
-	link_elems = doc.linkelems_by_rel 'describedby'
+    link_elems = doc.linkelems_by_rel 'describedby'
 
     assert_length(2, link_elems)
 
-	ns = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
-	uri = link_elems[0].xpath('./xrd:URI', ns)
-	assert_equal('http://host.example/endpoint', uri.text, "First Link URI")
-
-	template = link_elems[1].xpath('./xrd:URITemplate', ns)
-	assert_equal('http://host.example/descriptor?q={%id}', template.text, "Second link URITemplate")
-  end
-
-  def test_urielems_by_rel_with_multiple_rels
-    doc = Discodactyl::XRD::Document.parse <<eos
-<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-  <Subject>http://host.example/</Subject>
-  <Link>
-	<Rel>webfinger</Rel>
-	<Rel>describedby</Rel>
-	<URI>http://host.example/endpoint</URI>
-	<URITemplate>http://node.example/descriptor?q={%id}</URITemplate>
-  </Link>
-  <Link>
-	<Rel>feed</Rel>
-	<Rel>describedby</Rel>
-	<URITemplate>http://host.example/descriptor?q={%id}</URITemplate>
-	<URI>http://node.example/endpoint</URI>
-  </Link>
- </XRD>
-eos
-
-	uri_elems = doc.urielems_by_rel 'describedby'
-
-    assert_length(4, uri_elems, 'got uri_elems: [[[%s]]]'%uri_elems.to_s)
-
-	assert_equal('http://host.example/endpoint', uri_elems[0].text)
-	assert_equal('http://node.example/descriptor?q={%id}', uri_elems[1].text)
-	assert_equal('http://host.example/descriptor?q={%id}', uri_elems[2].text)
-	assert_equal('http://node.example/endpoint', uri_elems[3].text)
+    assert_equal 'http://host.example/endpoint', link_elems[0]['href']
+    assert_equal 'http://host.example/descriptor?q={%id}', link_elems[1]['template']
   end
 
 #  def test_links_by_rel
