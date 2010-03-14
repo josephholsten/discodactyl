@@ -3,7 +3,7 @@ libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require "test/unit"
-require "discodactyl"
+require "discodactyl/acct_uri"
 
 class TestURIAcct < Test::Unit::TestCase
   def test_parse_without_scheme
