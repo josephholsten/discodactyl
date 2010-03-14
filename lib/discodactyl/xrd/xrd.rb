@@ -42,6 +42,9 @@ module XRD
     # def uris_by_media_type(media_type, params = {})
     #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
     # end
+    def to_s
+      raw.to_s
+    end
   end
 end
 end
