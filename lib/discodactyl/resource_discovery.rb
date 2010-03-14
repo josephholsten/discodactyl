@@ -1,6 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
-require 'active_support'
+require 'active_support/core_ext/object/misc'
 require 'discodactyl'
 
 module Discodactyl

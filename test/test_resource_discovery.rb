@@ -1,3 +1,7 @@
+#!/usr/bin/env ruby -w
+libdir = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+
 require File.dirname(__FILE__) + '/test_helper'
 require "test/unit"
 require "discodactyl"

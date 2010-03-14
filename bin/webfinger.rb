@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby -w
-libdir = File.join(File.dirname(__FILE__), '..', 'lib')
+libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'rubygems'

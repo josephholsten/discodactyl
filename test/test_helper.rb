@@ -1,3 +1,4 @@
+require "test/unit"
 module Test::Unit::Assertions
   def assert_length(expected, enum, message = nil)
     message = build_message message, '<?> is not length <?>', enum, expected
