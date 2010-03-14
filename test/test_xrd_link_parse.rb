@@ -69,6 +69,16 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     assert_equal URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.template
   end
 
+  def test_ignores_template_when_href_exists
+    raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link rel="lrdd" type="text/html" href="http://host.example" template="http://www.google.com/s2/webfinger/?q={%id}"/></XRD>'
+    elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
+
+    link = Discodactyl::XRD::Link.parse(elem)
+
+    assert_equal 'http://host.example', link.href
+    assert_nil link.template
+  end
+
   def test_to_uris_for_plain_uri
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link href="http://host.example"/></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
