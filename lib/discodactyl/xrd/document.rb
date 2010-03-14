@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'discodactyl/xrd/link'
 
 module Discodactyl
 module XRD

@@ -6,7 +6,7 @@ $LOAD_PATH.unshift(testdir) unless $LOAD_PATH.include?(testdir)
 
 require 'test_helper'
 require "test/unit"
-require "discodactyl"
+require "discodactyl/xrd/document"
 
 class TestXRDParsing < Test::Unit::TestCase
   def test_parse
