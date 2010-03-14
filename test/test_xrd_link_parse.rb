@@ -3,7 +3,8 @@ libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require "test/unit"
-require "discodactyl"
+require "discodactyl/xrd/link"
+require "discodactyl/uri_template"
 
 class TestXRDLinkParsing < Test::Unit::TestCase
   def setup
