@@ -2,8 +2,7 @@
 libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
-require 'rubygems'
-require 'lib/discodactyl'
+require 'discodactyl'
 require 'open-uri'
 
 if ARGV.length == 0
@@ -15,8 +14,8 @@ end
 acct = URI::ACCT.parse(ARGV[0])
 
 # Perform LRDD discovery on acct with the  webfinger relation
-finger_rel = "http://webfinger.info/rel/service"
-webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'id' => acct.id)
+finger_rel = "lrdd"
+webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'uri' => acct)
 
 raise "URI didn't have any linked webfinger URIs" if webfinger_uris.empty?
 
