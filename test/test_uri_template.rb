@@ -10,6 +10,7 @@ class TestURITemplate < Test::Unit::TestCase
     t = URITemplate.new('http://example.org?q={uri}')
     assert_equal('http://example.org?q=http%3A%2F%2Fexample.com%2Fr%3Ff%3D1', t.to_uri('uri' => URI.parse('http://example.com/r?f=1')))
   end
+  # from http://tools.ietf.org/html/draft-hammer-hostmeta-05#section-3.2.1
   def test_render_encode
     t = URITemplate.new('http://example.org?q={uri}')
     assert_equal('http://example.org?q=http%3A%2F%2Fexample.com%2Fr%3Ff%3D1', t.to_uri('uri' => 'http://example.com/r?f=1'))
