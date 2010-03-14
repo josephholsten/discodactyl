@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'active_support/core_ext/object/misc'
-require 'discodactyl'
+require 'discodactyl/link_header'
 
 module Discodactyl
   class ResourceDiscovery
@@ -82,39 +82,11 @@ module Discodactyl
       # with rel, and return its href
       def get_uris_by_rel_from_link_header(response, rel)
         links = [response.meta['Link']].flatten.collect {|link|
-          parse_link_header(link);
+          LinkHeader.parse(link);
         }
         link = links.find {|l| l[:rel].include? rel }
         xrd = link[:href]
       end
-
-      def parse_link_header(string)
-        returning(params = {}) do
-          if string =~ /^<([^>]+)>(.*)$/
-            params[:href] = $1
-            $2.split(/;\s*/).each do |part|
-              param, value = part.split '='
-              value = value[1...-1] if value =~ /^".*"$/
-              if param =~ /rel/i
-                  insert_name_into_hash(params, param.to_sym, value)
-              elsif !param.nil?
-                  params[param.to_sym] = value
-              end
-            end
-          else
-            raise "malformed link header: #{string}"
-          end
-        end
-      end
-
-      def insert_name_into_hash(hash, name, value)
-          value = value.split(/\s+/)
-          hash[name] ||= []
-          hash[name] << value
-          hash[name].flatten!
-          hash
-      end
-
     end
   end
 end
