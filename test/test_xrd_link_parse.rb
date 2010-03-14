@@ -33,7 +33,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     assert_not_nil(link)
   end
 
-  def test_parse_rels
+  def test_parse_rel
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link rel="lrdd"/></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
@@ -42,7 +42,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     assert_equal 'lrdd', link.rel
   end
 
-  def test_parse_media_types
+  def test_parse_type
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link type="text/html"/></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
@@ -51,7 +51,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     assert_equal 'text/html', link.type
   end
 
-  def test_parse_uris
+  def test_parse_href
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link href="http://host.example"/></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
@@ -60,7 +60,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
     assert_equal 'http://host.example', link.href
   end
 
-  def test_parse_uri_templates
+  def test_parse_template
     raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link template="http://www.google.com/s2/webfinger/?q={%id}"/></XRD>'
     elem = Nokogiri(raw).xpath('/xrd:XRD/xrd:Link', @namespaces).first
 
