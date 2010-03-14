@@ -37,7 +37,7 @@ module XRD
     #   links.collect{|l| l.has_media_type? media_type }
     # end
     def uris_by_rel(rel, params = {})
-        links_by_rel(rel).map {|l| l.to_uris(params) }.flatten
+        links_by_rel(rel).map {|l| l.to_uri(params) }
     end
     # def uris_by_media_type(media_type, params = {})
     #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
