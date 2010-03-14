@@ -12,6 +12,7 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
 * XRD parsing and link finding.
 * LRDD discovery.
+* Link Headers.
 * acct: URI parsing.
 * Probably filled with bugs. Don't forget your bug powder.
 
@@ -22,8 +23,8 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
   acct = URI.parse 'acct:bradfitz@gmail.com'
 
-  webfinger_uris = XRD::ResourceDiscovery.get_uris_by_rel(acct, 'http://webfinger.info/rel/service', 'id' => acct.id)
-  disco_doc = XRD::Document.parse(open(webfinger_uris.first))
+  webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, 'lrdd', 'uri' => acct)
+  disco_doc = Discodactyl::XRD::Document.parse(open(webfinger_uris.first))
 
 == REQUIREMENTS:
 
