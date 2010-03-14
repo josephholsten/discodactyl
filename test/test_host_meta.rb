@@ -3,7 +3,8 @@ libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require "test/unit"
-require "discodactyl"
+require "discodactyl/host_meta"
+require "discodactyl/acct_uri"
 
 class TestHostMeta < Test::Unit::TestCase
   def test_get_uri_from_host
