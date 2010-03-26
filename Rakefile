@@ -44,12 +44,12 @@ Rake::GemPackageTask.new(spec) do |pkg|
 end
 
 file 'MANIFEST.tmp' do
-  sh %{find . -type f | sed 's/\\.\\///' | grep -v '.git' > MANIFEST.tmp}
+  sh %{find . -type f | sed 's/\\.\\///' | grep -v '.git' | sort > MANIFEST.tmp}
 end
 CLEAN << 'MANIFEST.tmp'
 
 desc "Check the manifest against current files"
-task :check_manifest => ['MANIFEST', 'MANIFEST.tmp'] do
+task :check_manifest => [:clean, 'MANIFEST', 'MANIFEST.tmp'] do
   puts `diff -du MANIFEST MANIFEST.tmp`
 end
 
