@@ -29,7 +29,6 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 == REQUIREMENTS:
 
 * nokogiri
-* hoe
 
 == INSTALL:
 
