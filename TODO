@@ -1,0 +1,19 @@
+* release as rip, gem
+* write man page
+
+* semver
+* document better
+* ensure security
+* prettify the script
+* check hm:Host
+* check final /XRD/Subject
+* test 3** redirects
+* REXML support
+host meta http://tools.ietf.org/html/draft-hammer-hostmeta-05
+* uri template subset
+webfinger
+xrd http://www.oasis-open.org/committees/download.php/36542/xrd-1.0-wd15.html
+lrdd http://tools.ietf.org/html/draft-hammer-discovery-04
+link header http://tools.ietf.org/html/draft-nottingham-http-link-header-08
+
+versioning-rels http://tools.ietf.org/html/draft-brown-versioning-link-relations-07

@@ -1,5 +1,6 @@
 = Discodactyl
 
+* http://dactylo.us
 * http://github.com/josephholsten/discodactyl
 * http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
 * mailto:joseph@josephholsten.com
@@ -30,9 +31,9 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
 * nokogiri
 
-== INSTALL:
+== INSTALLING:
 
-* sudo gem install discodactyl
+See the INSTALL file for details.
 
 == LICENSE:
 
