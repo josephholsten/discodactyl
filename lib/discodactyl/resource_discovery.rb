@@ -6,6 +6,17 @@ module Discodactyl
   class ResourceDiscovery
     class << self
 
+      # perform LRDD on the URI, returning all linked URIs which match
+      # the provided rel. Any URITemplates will be expanded with the
+      # params if they are provided
+      # ---
+      # TODO: xri support: no host
+      # TODO: check if XRD/Property[@type=http://lrdd.net/priority/resource] to indicate resource-priority
+      # TODO: handle 3** status redirects
+      # TODO: maintain a security bit
+      # TODO: URIs for all discovery modes should be appended, not just returned
+      # TODO: rewrite this so it's just get links, which yields objects providing at least the xrd link interface (rel, href, type)
+      # +++
       def get_uris_by_rel(uri, rel, params = {})
         begin
           uri = URI.parse(uri.to_s) unless uri.respond_to?('open')

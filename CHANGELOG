@@ -1,3 +1,161 @@
+2010-03-26  Joseph Holsten  <joseph@josephholsten.com>
+
+	* Rakefile: remove gem building task
+	* discodactyl.gemspec: extracted from Rakefile
+
+	* MANIFEST: add new files, sort
+	* Rakefile: have check_manifest sort
+
+	* bin/webfinger.rb -> bin/webfinger: renamed
+
+	* Rakefile: remove hoe deps
+
+2010-03-19  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl.rb (Discodactyl::VERSION): bumped to 0.2.0
+
+2010-03-14  Joseph Holsten  <joseph@josephholsten.com>
+
+	* test/test_xrd_link_parse.rb: require xrd
+
+	* lib/discodactyl/xrd/document.rb (Discodactyl::XRD::XMLNS): Added. All
+	hardcoded usages changed.
+
+	* lib/discodactyl/resource_discovery.rb: remove unused require
+
+	* test/test_resource_discovery.rb: require only SUT
+
+	* lib/discodactyl/xrd/document.rb: require link
+	* lib/discodactyl/xrd/link.rb: require uri template
+
+	* test/test_xrd_parse.rb: require only SUT
+
+	* lib/discodactyl/xrd/xrd.rb -> lib/discodactyl/xrd/document.rb:
+	Renamed, all requires changed
+
+	* test/test_xrd_link_parse.rb
+    (TestXRDLinkParsing#test_parse_template): check href is nil
+
+	* test/test_xrd_link_parse.rb: require only SUT
+
+	* test/test_uri_template.rb: add docs
+
+	* bin/webfinger.rb: follow the rel='lrdd' and template with 'uri'
+
+	* lib/discodactyl/xrd/xrd.rb (Discodactyl::XRD::Document#to_s)
+	* test/test_xrd_parse.rb (TestXRDParsing#test_to_s): Added
+
+	* lib/discodactyl/xrd/xrd.rb (Discodactyl::XRD::Document#uris_by_rel): Use
+	singular converter
+	* test/test_xrd_parse.rb (TestXRDParsing#test_uris_by_rel): Added
+
+	* lib/discodactyl/xrd/xrd.rb
+	(Discodactyl::XRD::Document#linkelems_by_rel): Rewrite to search by rel
+	attribute
+	* test/test_xrd_parse.rb
+	(TestXRDParsing#test_linkelems_by_rel_with_multiple_rels)
+	(TestXRDParsing#test_linkelems_by_rel): Use modern examples, expectations
+
+	* lib/discodactyl/xrd/xrd.rb (Discodactyl::XRD::Document#urielems_by_rel)
+	* test/test_xrd_parse.rb
+	(TestXRDParsing#test_urielems_by_rel_with_multiple_rels): Removed
+
+	* test/test_xrd_link_parse.rb: remove unused test helpers from requires
+	and load path
+
+	* test/test_xrd_link_parse.rb
+	(TestXRDLinkParsing#test_ignores_template_when_href_exists): Added
+
+	* test/test_xrd_link_parse.rb
+	(TestXRDLinkParsing#test_parse_rels): rename to
+	(TestXRDLinkParsing#test_parse_rel)
+	(TestXRDLinkParsing#test_parse_media_types): rename to
+	(TestXRDLinkParsing#test_parse_type)
+	(TestXRDLinkParsing#test_parse_uris): rename to
+	(TestXRDLinkParsing#test_parse_href)
+	(TestXRDLinkParsing#test_parse_uri_templates): rename to
+	(TestXRDLinkParsing#test_parse_template)
+
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link::parse): Rewrite for
+	modern XRD link schema
+
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link#media_types)
+	(Discodactyl::XRD::Link#media_types=, Discodactyl::XRD::Link#uris)
+	(Discodactyl::XRD::Link#uris=, Discodactyl::XRD::Link#rels)
+	(Discodactyl::XRD::Link#rels=): Remove plural accessors
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link#href)
+	(Discodactyl::XRD::Link#href=, Discodactyl::XRD::Link#template)
+	(Discodactyl::XRD::Link#template=, Discodactyl::XRD::Link#type)
+	(Discodactyl::XRD::Link#type=, Discodactyl::XRD::Link#rel)
+	(Discodactyl::XRD::Link#rel=): Add singular accessors
+	* test/test_xrd_link_parse.rb (TestXRDLinkParsing#test_parse_media_types)
+	(TestXRDLinkParsing#test_parse_rels, TestXRDLinkParsing#test_parse_uris)
+	(TestXRDLinkParsing#test_parse_uri_templates)
+	(TestXRDLinkParsing#test_parse_all): Changed to modern sample data and
+	singular accessors
+
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link#to_uris): Removed
+	plural converter
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link#to_uri): Added
+	replacement singular converter
+	* test/test_xrd_link_parse.rb
+	(TestXRDLinkParsing#test_to_uris_for_uri_template)
+	(TestXRDLinkParsing#test_to_uris_for_plain_uri): Changed to modern sample
+	data and singular converter
+
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link::map_texts)
+	(Discodactyl::XRD::Link#has_rel?, Discodactyl::XRD::Link#has_media_type?):
+	Removed, no replacements provided
+
+	* test/test_xrd_link_parse.rb (TestXRDLinkParsing#assert_has_media_type?)
+	(TestXRDLinkParsing#test_has_rel?, TestXRDLinkParsing#assert_has_rel?)
+	(TestXRDLinkParsing#test_to_uris_for_mixed_uris_and_uri_templates)
+	(TestXRDLinkParsing#test_has_media_type?): Removed
+
+	* test/test_uri_template.rb: Require only SUT
+
+	* lib/discodactyl/uri_template.rb (URITemplate#to_uri): Percent encode for
+	basic template parameters
+
+	* test/test_uri_template.rb (TestURITemplate#test_render_encode_uri)
+	(TestURITemplate#test_render_encode): Added
+
+	* test/test_host_meta.rb: require only SUT
+
+	* test/test_host_meta.rb: remove require
+
+	* test/test_resource_discovery.rb, test/test_xrd_link_parse.rb
+	test/test_xrd_parse.rb: add test to load path
+
+	* lib/discodactyl/resource_discovery.rb
+	(Discodactyl::ResourceDiscovery::parse_link_header)
+	(Discodactyl::ResourceDiscovery::insert_name_into_hash): factor out
+	into LinkHeader
+
+	* lib/discodactyl/link_header.rb (Discodactyl::LinkHeader): Added
+
+	* lib/discodactyl/resource_discovery.rb
+	(Discodactyl::ResourceDiscovery::get_uris_by_rel_from_link_header): Parse
+	using LinkHeader
+
+	* test/test_link_header.rb: test LinkHeader refactor
+
+	* test/test_acct_uri.rb: only require SUT
+
+	* bin/webfinger.rb, test/test_acct_uri.rb, test/test_helper.rb
+	test/test_host_meta.rb, test/test_link_header.rb
+	test/test_resource_discovery.rb, test/test_uri_template.rb
+	test/test_xrd_link_parse.rb, test/test_xrd_parse.rb: setup loadpath and
+	requires properly
+
+	* lib/discodactyl/resource_discovery.rb: require only needed lib
+
+2009-09-13  Joseph Holsten  <joseph@josephholsten.com>
+
+	* bin/webfinger.rb: Use Nokogiri::XML
+	* lib/discodactyl/xrd/xrd.rb: Use Nokogiri::XML
+	* test/test_xrd_parse.rb: add many tests
+
 2009-08-25 Joseph Holsten <joseph@josephholsten.com>
 
         Rename package to discodactyl.
