@@ -1,3 +1,7 @@
+2010-05-17  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl/uri_template.rb (URITemplate): move into Discodactyl
+
 2010-03-26  Joseph Holsten  <joseph@josephholsten.com>
 
 	* Rakefile: remove gem building task

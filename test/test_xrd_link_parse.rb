@@ -61,7 +61,7 @@ class TestXRDLinkParsing < Test::Unit::TestCase
 
     link = Discodactyl::XRD::Link.parse(elem)
 
-    assert_equal URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.template
+    assert_equal Discodactyl::URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}'), link.template
     assert_nil link.href
   end
 
