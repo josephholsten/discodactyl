@@ -12,10 +12,11 @@ module XRD
           link.type = element['type']
           link.href = element['href']
           link.template = URITemplate.new(element['template']) unless link.href
+          link.raw = element
         end
       end
     end
-    attr_accessor :href, :template, :rel, :type
+    attr_accessor :href, :template, :rel, :type, :raw
     def to_uri(params = {})
       @href || @template.to_uri(params)
     end

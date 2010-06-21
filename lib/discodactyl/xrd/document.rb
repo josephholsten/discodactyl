@@ -42,6 +42,12 @@ module XRD
     # def uris_by_media_type(media_type, params = {})
     #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
     # end
+    # take an XML fragment for a link and append it to the document
+    def append(link)
+      raw.root.add_child(link)
+      Link.parse(raw.root.last_element_child)
+    end
+
     def to_s
       raw.to_s
     end
