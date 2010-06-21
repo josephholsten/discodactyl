@@ -28,4 +28,20 @@ eos
   def test_inserts_link_in_raw
     assert_include? @link.raw, @xrd.raw.search('//xrd:Link', Discodactyl::XRD::XMLNS)
   end
+
+  def test_append_preserves_rel
+    assert_equal 'http://oexchange.org/spec/0.8/rel/user-target', @link.rel
+  end
+
+  def test_append_preserves_attributes
+    assert_equal 'http://oexchange.org/spec/0.8/rel/user-target', @link.rel
+    assert_equal 'application/xrd+xml', @link.type
+    assert_equal 'http://www.example.com/linkeater/oexchange.xrd', @link.href
+  end
+
+  def test_append_preserves_attributes
+    assert_equal 'http://oexchange.org/spec/0.8/rel/user-target', @link.rel
+    assert_equal 'application/xrd+xml', @link.type
+    assert_equal 'http://www.example.com/linkeater/oexchange.xrd', @link.href
+  end
 end
