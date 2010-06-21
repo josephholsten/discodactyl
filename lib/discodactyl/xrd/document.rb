@@ -3,7 +3,7 @@ require 'discodactyl/xrd/link'
 
 module Discodactyl
 module XRD
-  XMLNS = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
+  XMLNS = {'xrd' => 'http://docs.oasis-open.org/ns/xri/xrd-1.0'}
   class Document
     class << self
       def parse(string)
@@ -24,12 +24,12 @@ module XRD
     attr_accessor :links, :raw
 
     def escapeXPath(str)
-        inner = str.split('\'').join('\',"\'",\'')
-        outer = 'concat(\'\',\'%s\')' % inner
+      inner = str.split('\'').join('\',"\'",\'')
+      outer = 'concat(\'\',\'%s\')' % inner
     end
 
     def linkelems_by_rel(rel)
-      path = "/xrd:XRD/xrd:Link[@rel=%s]"% escapeXPath(rel)
+      path = '/xrd:XRD/xrd:Link[@rel=%s]'% escapeXPath(rel)
       @raw.xpath path, XMLNS
     end
 
@@ -38,7 +38,7 @@ module XRD
     end
 
     def uris_by_rel(rel, params = {})
-        links_by_rel(rel).map {|l| l.to_uri(params) }
+      links_by_rel(rel).map {|l| l.to_uri(params) }
     end
 
     # take an XML fragment for a link and append it to the document

@@ -5,8 +5,7 @@ testdir = File.expand_path('../../test', __FILE__)
 $LOAD_PATH.unshift(testdir) unless $LOAD_PATH.include?(testdir)
 
 require 'test_helper'
-require "test/unit"
-require "discodactyl/xrd/document"
+require 'discodactyl/xrd/document'
 
 class TestXRDParsing < Test::Unit::TestCase
   def setup
@@ -27,9 +26,6 @@ eos
   <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
 </XRD>
 eos
-
-    @raw_link_without_id = '<Link rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml" href="http://www.example.com/linkeater/oexchange.xrd"/>'
-    @raw_link_with_id = '<Link xml:id="foo" rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml" href="http://www.example.com/linkeater/oexchange.xrd"/>'
 
     @xrd = Discodactyl::XRD::Document.parse(@full_xrd_string)
   end

@@ -5,7 +5,7 @@ testdir = File.expand_path('../../test', __FILE__)
 $LOAD_PATH.unshift(testdir) unless $LOAD_PATH.include?(testdir)
 
 require 'test_helper'
-require "discodactyl/xrd/document"
+require 'discodactyl/xrd/document'
 
 class TestXRDAppendWithoutID < ::Test::Unit::TestCase
   def setup
