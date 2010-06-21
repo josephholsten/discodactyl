@@ -22,6 +22,26 @@ module XRD
     def to_uri(params = {})
       @href || @template.to_uri(params)
     end
+
+    def id
+      begin
+        @raw.attribute_with_ns('id', 'http://www.w3.org/XML/1998/namespace').value
+      rescue
+      end
+    end
+
+    def id=(value)
+      @raw['xml:id'] = value
+    end
+
+    def to_s
+      @raw.to_s
+    end
+
+    def ==(other)
+      (other.respond_to?('raw') && (@raw == other.raw)) ||
+      super
+    end
   end
 end
 end

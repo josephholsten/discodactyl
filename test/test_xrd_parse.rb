@@ -27,6 +27,9 @@ eos
 </XRD>
 eos
 
+    @raw_link_without_id = '<Link rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml" href="http://www.example.com/linkeater/oexchange.xrd"/>'
+    @raw_link_with_id = '<Link xml:id="foo" rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml" href="http://www.example.com/linkeater/oexchange.xrd"/>'
+
     @xrd = Discodactyl::XRD::Document.parse(@full_xrd_string)
   end
   def test_parse
@@ -82,4 +85,62 @@ eos
     assert_length(1, links)
     assert_include?('http://host.example/descriptor?q=dclinton@gmail.com', links)
   end
+
+#   def test_update
+#     xrd_str =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#   <Link rel="webfinger" href="http://host.example/endpoint"/>
+#   <Link rel="describedby" href="http://host.example/endpoint"/>
+#   <Link rel="feed" template="http://host.example/descriptor?q={%id}"/>
+#   <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
+#   <Link href="http://www.example.com/linkeater/oexchange.xrd" rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml"/>
+#  </XRD>
+# eos
+#     doc = Discodactyl::XRD::Document.parse xrd_str
+#
+#     link = "<Link rel='http://oexchange.org/spec/0.8/rel/user-target' type='application/xrd+xml' href='updated' />"
+#
+#     doc.raw.xpath('//xrd:Link',Discodactyl::XRD::XMLNS).after(link)
+#
+#     expected =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#   <Link rel="webfinger" href="http://host.example/endpoint"/>
+#   <Link rel="describedby" href="http://host.example/endpoint"/>
+#   <Link rel="feed" template="http://host.example/descriptor?q={%id}"/>
+#   <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
+#   <Link href="updated" rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml"/>
+#  </XRD>
+# eos
+#
+#     assert_equal expected, doc.to_s
+#   end
+
+#   def test_delete
+#     xrd_str =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#   <Link xml:id='1' href="http://example.com/" rel="user-target" type="application/xrd+xml"/>
+#  </XRD>
+# eos
+#     doc = Discodactyl::XRD::Document.parse xrd_str
+#
+#     link = "<Link rel='http://oexchange.org/spec/0.8/rel/user-target' type='application/xrd+xml' href='updated' />"
+#
+#     doc.raw.xpath('//xrd:Link',Discodactyl::XRD::XMLNS).after(link)
+#
+#     expected =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#  </XRD>
+# eos
+#
+#     assert_equal expected, doc.to_s
+#     assert !doc.include?(link)
+#   end
 end

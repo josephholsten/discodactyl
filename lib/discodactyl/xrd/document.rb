@@ -10,18 +10,13 @@ module XRD
         raw = Nokogiri::XML(string)
         doc = self.new
 
-        link_elems = raw.xpath('/xrd:XRD/xrd:Link', XMLNS)
-        doc.links = link_elems.collect {|elem|
-          Link.parse(elem)
-        }
-
         doc.raw = raw
 
         doc
       end
     end
 
-    attr_accessor :links, :raw
+    attr_accessor :raw
 
     def escapeXPath(str)
       inner = str.split('\'').join('\',"\'",\'')
@@ -43,12 +38,37 @@ module XRD
 
     # take an XML fragment for a link and append it to the document
     def append(link)
+      initial_ids = ids
       raw.root.add_child(link)
-      Link.parse(raw.root.last_element_child)
+      elem = Link.parse(raw.root.last_element_child)
+      elem.id = generate_tag_uri if elem.id.nil? || initial_ids.include?(elem.id)
+      elem
+    end
+
+    def links
+      raw.xpath('/xrd:XRD/xrd:Link', XMLNS).collect {|elem|
+        Link.parse(elem)
+      }
+    end
+
+    def find_link_by_id(link_id)
+        links.find {|link| link.id == link_id}
+    end
+
+    def ids
+      links.map(&:id).reject(&:nil?)
     end
 
     def to_s
       raw.to_s
+    end
+
+    def generate_tag_uri
+      scheme = 'tag'
+      authority = 'dactylo.us'
+      date = Date.today.to_s
+      specific = "/xrd/link/#{rand(2**10)}"
+      "#{scheme}:#{authority},#{date}:#{specific}"
     end
   end
 end
