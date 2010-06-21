@@ -41,31 +41,6 @@ eos
     assert_equal(4, @xrd.links.length)
   end
 
-#  def test_xpath_escape
-#    doc = Nokogiri('<root><node>foo\'bar"baz</node></root>').xpath('/root[node=\'foo&apos;bar&quot;baz\']')
-#	assert_length(1, actual)
-#  end
-
-#  def test_linkelems_by_rel_escaping_for_apos
-#    doc = Discodactyl::XRD::Document.parse <<eos
-#<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-#  <Subject>http://host.example/</Subject>
-#  <Link>
-#	<Rel>foo'bar</Rel>
-#	<URI>http://host.example/endpoint</URI>
-#  </Link>
-# </XRD>
-#eos
-#
-#	link_elems = doc.linkelems_by_rel "foo'bar"
-#
-#    assert_length(1, link_elems)
-#
-#	ns = {'xrd' => "http://docs.oasis-open.org/ns/xri/xrd-1.0"}
-#	uri = link_elems[0].xpath('./xrd:URI', ns)
-#	assert_equal('http://host.example/endpoint', uri.text)
-#  end
-
   def test_linkelems_by_rel
     link_elems = @xrd.linkelems_by_rel 'describedby'
 
@@ -97,25 +72,18 @@ eos
     assert_equal @full_xrd_string, @xrd.to_s
   end
 
-#  def test_links_by_rel
-#    raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"> <Subject match="http://docs.oasis-open.org/xri/xrd/v1.0#begins-with">http://gmail.com/</Subject> <Link> <Rel>http://webfinger.info/rel/service</Rel> <URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate> </Link> <Link> <Rel>describedby</Rel> <URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate> </Link> </XRD>'
-#    doc = Discodactyl::XRD::Document.parse(raw)
-#
-#    rel = 'http://webfinger.info/rel/service'
-#    links = doc.links_by_rel(rel)
-#
-#    assert_length(1, links)
-#    expected = URITemplate.new('http://www.google.com/s2/webfinger/?q={%id}')
-#    assert_include?(expected, links[0].uris)
-#  end
-#  def test_uris_by_rel
-#    raw = '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"> <Subject match="http://docs.oasis-open.org/xri/xrd/v1.0#begins-with">http://gmail.com/</Subject> <Link> <Rel>http://webfinger.info/rel/service</Rel> <URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate> </Link> <Link> <Rel>describedby</Rel> <URITemplate>http://www.google.com/s2/webfinger/?q={%id}</URITemplate> </Link> </XRD>'
-#    doc = Discodactyl::XRD::Document.parse(raw)
-#
-#    rel = 'http://webfinger.info/rel/service'
-#    links = doc.uris_by_rel(rel, 'id' => 'dclinton@gmail.com')
-#
-#    assert_length(1, links)
-#    assert_include?('http://www.google.com/s2/webfinger/?q=dclinton@gmail.com', links)
-#  end
+  def test_links_by_rel
+    links = @xrd.links_by_rel('feed')
+
+    assert_length(1, links)
+    expected = Discodactyl::URITemplate.new('http://host.example/descriptor?q={%id}')
+    assert_equal(expected, links[0].template)
+  end
+
+  def test_uris_by_rel
+    links = @xrd.uris_by_rel('feed', 'id' => 'dclinton@gmail.com')
+
+    assert_length(1, links)
+    assert_include?('http://host.example/descriptor?q=dclinton@gmail.com', links)
+  end
 end
