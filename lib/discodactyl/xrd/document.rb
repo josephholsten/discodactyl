@@ -20,28 +20,27 @@ module XRD
         doc
       end
     end
+
     attr_accessor :links, :raw
-    # attr_accessor :expires, :links, :subject, :aliases
-	def escapeXPath(str)
-      inner = str.split('\'').join('\',"\'",\'')
-	  outer = 'concat(\'\',\'%s\')' % inner
-	end
+
+    def escapeXPath(str)
+        inner = str.split('\'').join('\',"\'",\'')
+        outer = 'concat(\'\',\'%s\')' % inner
+    end
+
     def linkelems_by_rel(rel)
       path = "/xrd:XRD/xrd:Link[@rel=%s]"% escapeXPath(rel)
       @raw.xpath path, XMLNS
     end
+
     def links_by_rel(rel)
       linkelems_by_rel(rel).map {|e| Link.parse(e) }
     end
-    # def links_by_media_type(media_type)
-    #   links.collect{|l| l.has_media_type? media_type }
-    # end
+
     def uris_by_rel(rel, params = {})
         links_by_rel(rel).map {|l| l.to_uri(params) }
     end
-    # def uris_by_media_type(media_type, params = {})
-    #   links_by_media_type(media_type).collect{|l| l.to_uris params }.flatten
-    # end
+
     # take an XML fragment for a link and append it to the document
     def append(link)
       raw.root.add_child(link)
