@@ -1,5 +1,31 @@
+=== 0.3.0 / 2010-07-08
+
+New Features
+
+* Gem installation
+* XRD support for adding & removing links
+* Useful, plain text output from webfinger script
+
+Breaking Changes
+
+* Webfinger script no longer outputs raw XRD
+
+=== 0.2.0 / 2010-03-19
+
+New Features
+
+* URI.parse support for acct: URIs
+* URI Template parsing
+* XRD parsing and query support
+* Host Meta and in-document discovery
+* Webfinger example script
+
+Breaking Changes
+
+* XRD format has completely changed to comply with new specifications
+
 === 0.0.0 / 2009-07-25
 
-* 1 major enhancement
+New Features
 
   * Add Link Header discovery
