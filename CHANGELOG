@@ -1,3 +1,37 @@
+2010-07-08  Joseph Holsten  <joseph@josephholsten.com>
+
+	* bin/webfinger: display any hcard, openid, profile, contacts and
+	status info found. Backwards incompatible with the useless behavior of
+	just spitting out xml.
+
+	* bin/webfinger: rescue host-meta 404s with a pleasant error message.
+	* lib/discodactyl/host_meta.rb: (HostMeta::from_uri): pass base_uri
+	into any 404 errors.
+	* lib/discodactyl/host_meta.rb: (Discodactyl::HostMetaHTTPError): add.
+
+2010-06-21  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl/xrd/document.rb (Document#links=): remove. This is a
+	breaking change.
+
+	* lib/discodactyl/xrd/document.rb (Document#initialize)
+	(Document#links): collect links at runtime, instead of at
+	initialization.
+
+	* lib/discodactyl/xrd/document.rb (Document#append): ensure ids are
+	uniquene.
+
+	* lib/discodactyl/xrd/document.rb (Document#find_link_by_id)
+	(Document#ids, Discodactyl::XRD::Document#generate_tag_uri): add.
+
+	* lib/discodactyl/xrd/link.rb (Link#id, Link#id=, Link#to_s)
+	(Link#==): add.
+
+2010-06-20  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl/xrd/document.rb (Document#append): add
+	* lib/discodactyl/xrd/link.rb (Link#raw) add
+
 2010-05-17  Joseph Holsten  <joseph@josephholsten.com>
 
 	* lib/discodactyl/uri_template.rb (URITemplate): move into Discodactyl
