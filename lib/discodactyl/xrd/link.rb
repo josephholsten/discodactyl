@@ -2,8 +2,8 @@ require 'nokogiri'
 require 'active_support/core_ext/object/misc'
 require 'discodactyl/uri_template'
 
-module Discodactyl
-module XRD
+module Discodactyl # :nodoc:
+module XRD # :nodoc:
   class Link
     class << self
       def parse(element)

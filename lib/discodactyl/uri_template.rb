@@ -1,4 +1,6 @@
-module Discodactyl
+module Discodactyl # :nodoc:
+  # Basic URI templates as used in XRD. Not to be confused with
+  # http://tools.ietf.org/html/draft-gregorio-uritemplate
   class URITemplate
     attr_accessor :pattern
     def initialize(pattern)

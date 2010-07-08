@@ -1,8 +1,8 @@
 require 'nokogiri'
 require 'discodactyl/xrd/link'
 
-module Discodactyl
-module XRD
+module Discodactyl # :nodoc:
+module XRD # :nodoc:
   XMLNS = {'xrd' => 'http://docs.oasis-open.org/ns/xri/xrd-1.0'}
   class Document
     class << self

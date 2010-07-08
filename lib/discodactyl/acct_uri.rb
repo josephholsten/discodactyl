@@ -1,6 +1,6 @@
 require 'uri'
 
-module URI
+module URI # :nodoc:
   class ACCT < Generic
 
 

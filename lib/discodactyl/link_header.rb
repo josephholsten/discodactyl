@@ -1,8 +1,18 @@
 require 'active_support/core_ext/object/misc'
 
-module Discodactyl
+module Discodactyl # :nodoc:
+  # Access to web links stored in HTTP Link header-fields. See also: 
+  # http://tools.ietf.org/html/draft-nottingham-http-link-header
   class LinkHeader < Hash
     class << self
+      # Take the link header value as a string and parse it into a Hash
+      #
+      # For example, the raw link header
+      #   Link: </>; rel="http://example.net/foo"
+      # is parsed by saying
+      #   link = LinkHeader.parse('</>; rel="http://example.net/foo"')
+      #   link[:href] # '/'
+      #   link[:rel] # ['http://example.net/foo']
       def parse(string)
         returning(params = LinkHeader.new) do
           if string =~ /^<([^>]+)>(.*)$/
@@ -22,6 +32,7 @@ module Discodactyl
         end
       end
 
+    private
       def insert_name_into_hash(hash, name, value)
           value = value.split(/\s+/)
           hash[name] ||= []
