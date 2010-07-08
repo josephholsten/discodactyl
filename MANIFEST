@@ -1,5 +1,7 @@
+AUTHORS
 CHANGELOG
 COPYING
+Gemfile
 INSTALL
 MANIFEST
 NEWS
@@ -7,6 +9,7 @@ README
 Rakefile
 TODO
 bin/webfinger
+discodactyl.gemspec
 lib/discodactyl.rb
 lib/discodactyl/acct_uri.rb
 lib/discodactyl/host_meta.rb
@@ -22,5 +25,6 @@ test/test_host_meta.rb
 test/test_link_header.rb
 test/test_resource_discovery.rb
 test/test_uri_template.rb
+test/test_xrd_append.rb
 test/test_xrd_link_parse.rb
 test/test_xrd_parse.rb

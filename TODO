@@ -1,4 +1,3 @@
-* release as gem
 * release as rip
 * write man page  webfinger.1
 * add CONTRIBUTING
@@ -14,6 +13,7 @@
 * test 3** redirects
 * REXML support
 * collect common rel values into a enum module
+* put license info in every file
 
 Reference Specs
 * host meta http://tools.ietf.org/html/draft-hammer-hostmeta-05
