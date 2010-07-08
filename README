@@ -11,10 +11,12 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
 == FEATURES/PROBLEMS:
 
-* XRD parsing and link finding.
+* Webfinger client.
+* XRD parsing, querying and modification.
 * LRDD discovery.
-* Link Headers.
+* HTTP Link header parsing.
 * acct: URI parsing.
+* Minimal URI Template parsing and application.
 * Probably filled with bugs. Don't forget your bug powder.
 
 == SYNOPSIS:
@@ -29,7 +31,10 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 
 == REQUIREMENTS:
 
-* nokogiri
+* nokogiri 1.4
+* actionpack 2.3
+* feedzirra 0.0.23
+* mofo 0.2
 
 == INSTALLING:
 
@@ -41,7 +46,7 @@ This software is also available in a permissive license. Please contact Joseph H
 
 (The GNU Affero General Public License)
 
-Copyright (c) 2009 Joseph Anthony Pasquale Holsten
+Copyright (c) 2009, 2010 Joseph Anthony Pasquale Holsten
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
