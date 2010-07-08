@@ -1,9 +1,12 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'discodactyl'
 require 'open-uri'
+require 'action_view'
+require 'mofo'
+require 'feedzirra'
 
 if ARGV.length == 0
 	puts "Usage: #{__FILE__} user@host"
@@ -13,23 +16,47 @@ end
 # parse identifier
 acct = URI::ACCT.parse(ARGV[0])
 
-# Perform LRDD discovery on acct with the  webfinger relation
+# Perform LRDD discovery on acct with the webfinger relation
 finger_rel = "lrdd"
-webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'uri' => acct)
+begin
+  webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'uri' => acct)
+rescue Discodactyl::HostMetaHTTPError => error
+  if error.io.status[1] == 'Not Found'
+    abort "No host meta webfinger information found at #{error.io.base_uri}"
+  else
+    raise
+  end
+end
 
-raise "URI didn't have any linked webfinger URIs" if webfinger_uris.empty?
+abort "URI didn't have any linked webfinger URIs" if webfinger_uris.empty?
 
 # retrieve user disco doc
-require 'prettyprint'
 disco_res = open(webfinger_uris.first)
 
 # parse disco doc
-###
-# XRD::Documents are ugly at the moment
-# reverting to standard XML in the meantime
-###
-#disco_doc = Discodactyl::XRD::Document.parse disco_res
-disco_doc = Nokogiri::XML disco_res
+disco = Discodactyl::XRD::Document.parse(disco_res)
 
-# pretty print
-puts disco_doc
+hcard_uri = disco.uris_by_rel('http://microformats.org/profile/hcard').first
+hcard = hCard.find(:first => hcard_uri)
+if hcard
+  puts "Name: #{hcard.fn.gsub(/\s+/, ' ')}" if hcard.properties.include?('fn')
+  puts "Title: #{hcard.title}" if hcard.properties.include?('title')
+  puts "Organization: #{hcard.org}" if hcard.properties.include?('org')
+end
+
+openid = disco.uris_by_rel('http://specs.openid.net/auth/').first
+puts "OpenID: #{openid}" if openid
+
+profile = disco.uris_by_rel('http://webfinger.net/rel/profile-page').first
+puts "Profile: #{profile}" if profile
+
+contacts = disco.uris_by_rel('http://portablecontacts.net/spec/1.0').first
+puts "Contacts: #{contacts}" if contacts
+
+activities = disco.uris_by_rel('http://schemas.google.com/g/2010#updates-from').first
+if activities
+  feed = Feedzirra::Feed.fetch_and_parse(activities)
+  entry = feed.entries.first
+  include ActionView::Helpers::DateHelper
+  puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago" 
+end

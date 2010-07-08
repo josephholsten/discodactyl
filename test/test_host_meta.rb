@@ -24,4 +24,14 @@ class TestHostMeta < Test::Unit::TestCase
     expected = URI.parse 'http://host.example/.well-known/host-meta'
     assert_equal expected, Discodactyl::HostMeta.get_uri_from_uri(uri)
   end
+
+  # def test_raise_meaningful_exception
+  #   stub(io).status { [ '404', 'Not Found'] }
+  #   stub(uri).open { raise OpenURI::HTTPError.new('foo', io)}
+  #   stub(URI).parse('http://example.com/.well-known/host-meta') { uri }
+  #
+  #   assert_raise Discodactyl::HostMetaHTTPError, "404 Not Found" do
+  #     Discodactyl::HostMeta.from_uri(uri)
+  #   end
+  # end
 end

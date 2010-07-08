@@ -13,6 +13,7 @@
 * check final /XRD/Subject
 * test 3** redirects
 * REXML support
+* collect common rel values into a enum module
 
 Reference Specs
 * host meta http://tools.ietf.org/html/draft-hammer-hostmeta-05

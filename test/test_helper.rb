@@ -10,3 +10,8 @@ module Test::Unit::Assertions
     assert enum.include?(atom), message
   end
 end
+
+class Test::Unit::TestCase
+  require 'rr'
+  include RR::Adapters::TestUnit
+end
