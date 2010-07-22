@@ -58,5 +58,7 @@ if activities
   feed = Feedzirra::Feed.fetch_and_parse(activities)
   entry = feed.entries.first
   include ActionView::Helpers::DateHelper
-  puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago" 
+  silence_warnings do
+    puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago"
+  end
 end
