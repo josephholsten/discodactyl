@@ -24,11 +24,21 @@ module Discodactyl # :nodoc
           else
             raise
           end
+        rescue ::SocketError => error
+          raise HostMetaSocketError.new(error.message, uri.host, uri.port)
         end
         self.parse raw
       end
     end
   end
   class HostMetaHTTPError < OpenURI::HTTPError # :nodoc:
+  end
+  class HostMetaSocketError < StandardError # :nodoc:
+    attr_accessor :host, :port
+    def initialize(msg = nil, host = nil, port = nil)
+      message = msg
+      @host = host
+      @port = port
+    end
   end
 end

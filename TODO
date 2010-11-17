@@ -14,11 +14,28 @@
 * REXML support
 * collect common rel values into a enum module
 * put license info in every file
+* find out if ruby has a default debug flag
+* find well known uris via WellKnown.find(uri, :host_meta)
 
 Reference Specs
-* host meta http://tools.ietf.org/html/draft-hammer-hostmeta-05
+* host meta http://tools.ietf.org/html/draft-hammer-hostmeta-13
 * webfinger
-* xrd http://www.oasis-open.org/committees/download.php/36542/xrd-1.0-wd15.html
-* lrdd http://tools.ietf.org/html/draft-hammer-discovery-04
-* link header http://tools.ietf.org/html/draft-nottingham-http-link-header-08
-* versioning-rels http://tools.ietf.org/html/draft-brown-versioning-link-relations-07
+* xrd http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html
+* lrdd http://tools.ietf.org/html/draft-hammer-discovery-06
+* link header http://tools.ietf.org/html/rfc5988
+* versioning-rels http://tools.ietf.org/html/rfc5829
+
+Interesting webfinger variants
+* joseph@josephholsten.com
+* romeda@gmail.com
+* will@willmeyer.com
+* dclinton@gmail.com
+* bradfitz@gmail.com
+* dclinton@yahoo.com
+* beestage@yahoo.com
+* gffletch@aol.com
+
+other clients
+* webfingerclient-dclinton.appspot.com/
+* webfinger.org/lookup/darron@froese.org
+* web.mailana.com/labs/findbyemail/

@@ -1,4 +1,4 @@
-require 'active_support/core_ext/object/misc'
+# require 'active_support/core_ext/object/misc'
 
 module Discodactyl # :nodoc:
   # Access to web links stored in HTTP Link header-fields. See also: 
@@ -14,7 +14,7 @@ module Discodactyl # :nodoc:
       #   link[:href] # '/'
       #   link[:rel] # ['http://example.net/foo']
       def parse(string)
-        returning(params = LinkHeader.new) do
+        LinkHeader.new.tap do |params|
           if string =~ /^<([^>]+)>(.*)$/
             params[:href] = $1
             $2.split(/;\s*/).each do |part|

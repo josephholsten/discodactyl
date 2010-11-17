@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'discodactyl/link_header'
+require 'discodactyl/log'
 
 module Discodactyl # :nodoc:
   class ResourceDiscovery
@@ -20,6 +21,7 @@ module Discodactyl # :nodoc:
       def get_uris_by_rel(uri, rel, params = {})
         begin
           uri = URI.parse(uri.to_s) unless uri.respond_to?('open')
+          Discodactyl.log.debug "Getting uris for uri #{uri.inspect} by rel #{rel.inspect} with params #{params.inspect}" if Discodactyl.log
           resource = uri.open
         rescue OpenURI::HTTPError => e
           status = e.io.status[0] # => 3xx, 4xx, or 5xx
@@ -61,9 +63,28 @@ module Discodactyl # :nodoc:
           end
         end
         unless uris
-          host_meta = Discodactyl::HostMeta.from_uri uri
+          Discodactyl.log.debug("getting jrd host-meta") if Discodactyl.log
+          begin
+            host_meta = Discodactyl::HostMetaJRD.from_uri uri
+          rescue => error
+            Discodactyl.log.debug("Error parsing jrd host-meta: #{error}") if Discodactyl.log
+          end
+          Discodactyl.log.debug("finding uris in host-meta") if Discodactyl.log
           uris = host_meta.uris_by_rel(rel, params)
         end
+        
+        unless uris
+          Discodactyl.log.debug("Getting xrd host-meta") if Discodactyl.log
+          begin
+            host_meta = Discodactyl::HostMeta.from_uri uri
+          rescue => error
+            Discodactyl.log.debug("Error getting xrd host-meta: #{error}") if Discodactyl.log
+            raise
+          end
+          Discodactyl.log.debug("finding uris in host-meta") if Discodactyl.log
+          uris = host_meta.uris_by_rel(rel, params)
+        end
+        Discodactyl.log.debug "URIs: #{uris.inspect}" if Discodactyl.log
         uris
       end
 

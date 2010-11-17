@@ -7,14 +7,27 @@ require 'open-uri'
 require 'action_view'
 require 'mofo'
 require 'feedzirra'
+require 'logger'
+
+log = Logger.new(STDOUT)
+Discodactyl.log = log
 
 if ARGV.length == 0
 	puts "Usage: #{__FILE__} user@host"
 	exit 0
 end
 
+if ARGV[0].match /^-d/
+  log.level = Logger::DEBUG
+  # ARGV.unshift
+  ARGV.shift
+else
+  log.level = Logger::WARN
+end
+
 # parse identifier
-acct = URI::ACCT.parse(ARGV[0])
+raw_acct = ARGV[0]
+acct = URI::ACCT.parse(raw_acct)
 
 # Perform LRDD discovery on acct with the webfinger relation
 finger_rel = "lrdd"
@@ -22,43 +35,73 @@ begin
   webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, finger_rel, 'uri' => acct)
 rescue Discodactyl::HostMetaHTTPError => error
   if error.io.status[1] == 'Not Found'
-    abort "No host meta webfinger information found at #{error.io.base_uri}"
+    abort "No host meta webfinger information found at #{error.io.base_uri}. Is the file there?"
   else
     raise
   end
+rescue Discodactyl::HostMetaSocketError => error
+  abort "Could not connect to #{error.host}:#{error.port}. Is your internet connection working?"
 end
 
 abort "URI didn't have any linked webfinger URIs" if webfinger_uris.empty?
 
 # retrieve user disco doc
-disco_res = open(webfinger_uris.first)
+begin
+  disco_uri = webfinger_uris.first
+  disco_res = open(disco_uri)
+rescue OpenURI::HTTPError
+  abort "Couldn't open the disco doc at #{disco_uri}. Is your host-meta pointed at the right place?"
+end
 
 # parse disco doc
-disco = Discodactyl::XRD::Document.parse(disco_res)
+begin
+  disco = Discodactyl::JRD::Document.parse(disco_res)
+  log.debug "disco doc <#{webfinger_uris.first}>:\n#{disco.inspect}\n"
+rescue Discodactyl::JRD::ParseError => e
+  log.debug "disco doc doesn't seem to be a JRD #{e.message}"
+  disco_res.rewind
+  disco = Discodactyl::XRD::Document.parse(disco_res)
+  log.debug "disco doc <#{webfinger_uris.first}>:\n#{disco}\n"
+end
+
+log.debug "links: #{disco.links.map{|r| [r.rel, r.type, r.href]}.inspect}"
+log.debug "rels: #{disco.rels.inspect}"
+
+if disco.subject
+  log.debug "subject: #{disco.subject}"
+  unless acct.to_s == disco.subject.to_s
+    abort "Disco doc's subject <#{disco.subject}> doesn't match account we're webfingering <#{acct}>"
+  end
+else
+  log.warn("Disco doc didn't list a subject. Assuming everything is well.")
+end
 
 hcard_uri = disco.uris_by_rel('http://microformats.org/profile/hcard').first
-hcard = hCard.find(:first => hcard_uri)
+hcard = hCard.find(:first => hcard_uri) rescue
 if hcard
   puts "Name: #{hcard.fn.gsub(/\s+/, ' ')}" if hcard.properties.include?('fn')
   puts "Title: #{hcard.title}" if hcard.properties.include?('title')
   puts "Organization: #{hcard.org}" if hcard.properties.include?('org')
 end
 
-openid = disco.uris_by_rel('http://specs.openid.net/auth/').first
-puts "OpenID: #{openid}" if openid
+links_with_titles = disco.links.select{|l| l.title.present? }
+links_with_titles.each do |link|
+  puts "#{link.title}: #{link.to_uri}"
+end
 
-profile = disco.uris_by_rel('http://webfinger.net/rel/profile-page').first
-puts "Profile: #{profile}" if profile
-
-contacts = disco.uris_by_rel('http://portablecontacts.net/spec/1.0').first
-puts "Contacts: #{contacts}" if contacts
+Discodactyl::KNOWN_RELS.each do |name, rel|
+  uri = disco.uris_by_rel(rel).first
+  puts "#{name}: #{uri}" if uri
+end
 
 activities = disco.uris_by_rel('http://schemas.google.com/g/2010#updates-from').first
 if activities
   feed = Feedzirra::Feed.fetch_and_parse(activities)
   entry = feed.entries.first
-  include ActionView::Helpers::DateHelper
-  silence_warnings do
-    puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago"
+  if entry
+    include ActionView::Helpers::DateHelper
+    silence_warnings do
+      puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago"
+    end
   end
 end

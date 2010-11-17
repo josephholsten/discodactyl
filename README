@@ -20,6 +20,7 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 * acct: URI parsing.
 * Minimal URI Template parsing and application.
 * Probably filled with bugs. Don't forget your bug powder.
+* JRD parsing, querying.
 
 == SYNOPSIS:
 

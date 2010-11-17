@@ -1,13 +1,14 @@
 require 'nokogiri'
-require 'active_support/core_ext/object/misc'
+# require 'active_support/core_ext/object/misc'
 require 'discodactyl/uri_template'
 
 module Discodactyl # :nodoc:
 module XRD # :nodoc:
-  class Link
+  class Link < Struct.new(:href, :template, :rel, :type)
+    attr_accessor :raw
     class << self
       def parse(element)
-        returning(link = self.new) do
+        self.new.tap do |link|
           link.rel = element['rel']
           link.type = element['type']
           link.href = element['href']
@@ -17,10 +18,8 @@ module XRD # :nodoc:
       end
     end
 
-    attr_accessor :href, :template, :rel, :type, :raw
-
     def to_uri(params = {})
-      @href || @template.to_uri(params)
+      href || template.to_uri(params)
     end
 
     def id

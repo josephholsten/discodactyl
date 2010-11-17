@@ -29,7 +29,8 @@ module XRD # :nodoc:
     end
 
     def links_by_rel(rel)
-      linkelems_by_rel(rel).map {|e| Link.parse(e) }
+      # linkelems_by_rel(rel).map {|e| Link.parse(e) }
+      find_all_links_by_rel(rel)
     end
 
     def uris_by_rel(rel, params = {})
@@ -54,6 +55,10 @@ module XRD # :nodoc:
     def find_link_by_id(link_id)
         links.find {|link| link.id == link_id}
     end
+    
+    def find_all_links_by_rel(rel)
+        links.find_all {|link| link.rel == rel }
+    end
 
     def ids
       links.map(&:id).reject(&:nil?)
@@ -62,6 +67,10 @@ module XRD # :nodoc:
     def to_s
       raw.to_s
     end
+    
+    def rels
+      links.map(&:rel).reject(&:nil?).uniq
+    end
 
     def generate_tag_uri
       scheme = 'tag'
@@ -69,6 +78,10 @@ module XRD # :nodoc:
       date = Date.today.to_s
       specific = "/xrd/link/#{rand(2**10)}"
       "#{scheme}:#{authority},#{date}:#{specific}"
+    end
+    
+    def subject
+      raw.xpath('/xrd:XRD/xrd:Subject', XMLNS).text
     end
   end
 end

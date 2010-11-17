@@ -13,7 +13,9 @@ module URI # :nodoc:
       /^(acct:)?(.*)$/ =~ str
       scheme = 'acct'
       opaque = $2
-      self.new(scheme, nil, nil, nil, nil, nil, opaque, nil, nil)
+      acct = self.new(scheme, nil, nil, nil, nil, nil, opaque, nil, nil)
+      Discodactyl.log.debug("Parsed #{str.inspect} into URI #{acct.inspect}") if Discodactyl.log
+      acct
     end
 
 

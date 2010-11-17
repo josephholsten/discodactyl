@@ -1,0 +1,142 @@
+#!/usr/bin/env ruby -w
+libdir = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+testdir = File.expand_path('../../test', __FILE__)
+$LOAD_PATH.unshift(testdir) unless $LOAD_PATH.include?(testdir)
+
+require 'test_helper'
+require 'discodactyl/jrd/document'
+
+class TestJRDParsing < Test::Unit::TestCase
+  def setup
+    @minimal_jrd_string =<<eos
+{
+  "subject":"http://host.example/"
+}
+eos
+
+#     @full_jrd_string =<<eos
+# {"subject":"http://host.example/","links":{"describedby":[{"href":"http://host.example/endpoint"},{"template":"http://host.example/descriptor?q={%id}"}],"webfinger":[{"href":"http://host.example/endpoint"}],"feed":[{"template":"http://host.example/descriptor?q={%id}"}]}}
+# eos
+# <"{\"subject\":\"http://host.example/\",\"links\":{\"describedby\":[{\"href\":\"http://host.example/endpoint\"},{\"template\":\"http://host.example/descriptor?q={%id}\"}],\"webfinger\":[{\"href\":\"http://host.example/endpoint\"}],\"feed\":[{\"template\":\"http://host.example/descriptor?q={%id}\"}]}}\n"> expected but was
+# <"{\"subject\":\"http://host.example/\",\"links\":{\"webfinger\":[{\"href\":\"http://host.example/endpoint\"}],\"describedby\":[{\"href\":\"http://host.example/endpoint\"},{\"template\":\"http://host.example/descriptor?q={%id}\"}],\"feed\":[{\"template\":\"http://host.example/descriptor?q={%id}\"}]}}">.
+
+    @full_jrd_string =<<eos
+{"subject":"http://host.example/","links":{"webfinger":[{"href":"http://host.example/endpoint"}],"describedby":[{"href":"http://host.example/endpoint"},{"template":"http://host.example/descriptor?q={%id}"}],"feed":[{"template":"http://host.example/descriptor?q={%id}"}]}}
+eos
+
+    @raw_link_without_id = '<Link rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml" href="http://www.example.com/linkeater/oexchange.xrd"/>'
+    
+    @raw_link_without_id = '{"http://oexchange.org/spec/0.8/rel/user-target":[{"type":"application/xrd+xml", "href":"http://www.example.com/linkeater/oexchange.xrd"}]}'
+    @raw_link_with_id = '{"http://oexchange.org/spec/0.8/rel/user-target":[{"id":"foo","type":"application/xrd+xml", "href":"http://www.example.com/linkeater/oexchange.xrd"}]}'
+
+    @jrd = Discodactyl::JRD::Document.parse(@full_jrd_string)
+  end
+  def test_parse
+    doc = Discodactyl::JRD::Document.parse(@full_jrd_string)
+    assert_not_nil(doc)
+  end
+  def test_parse_links
+    assert_equal(4, @jrd.links.length)
+  end
+
+  # def test_linkelems_by_rel
+  #   link_elems = @jrd.linkelems_by_rel 'describedby'
+  # 
+  #   assert_length(2, link_elems)
+  # 
+  #   assert_equal 'http://host.example/endpoint', link_elems[0]['href']
+  #   assert_equal 'http://host.example/descriptor?q={%id}', link_elems[1]['template']
+  # end
+
+  # def test_linkelems_by_rel_with_multiple_rels
+  #   link_elems = @jrd.linkelems_by_rel 'describedby'
+  # 
+  #   assert_length(2, link_elems)
+  # 
+  #   assert_equal 'http://host.example/endpoint', link_elems[0]['href']
+  #   assert_equal 'http://host.example/descriptor?q={%id}', link_elems[1]['template']
+  # end
+
+  def test_uris_by_rel
+    uris = @jrd.uris_by_rel 'describedby', 'id' => 'bradfitz@gmail.com'
+
+    assert_length(2, uris)
+
+    assert_equal 'http://host.example/endpoint', uris[0]
+    assert_equal 'http://host.example/descriptor?q=bradfitz@gmail.com', uris[1]
+  end
+
+  def test_links_by_rel
+    links = @jrd.links_by_rel('feed')
+
+    assert_length(1, links)
+    expected = Discodactyl::URITemplate.new('http://host.example/descriptor?q={%id}')
+    assert_equal(expected, links[0].template)
+  end
+
+  def test_uris_by_rel
+    links = @jrd.uris_by_rel('feed', 'id' => 'dclinton@gmail.com')
+
+    assert_length(1, links)
+    assert_include?('http://host.example/descriptor?q=dclinton@gmail.com', links)
+  end
+
+#   def test_update
+#     jrd_str =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#   <Link rel="webfinger" href="http://host.example/endpoint"/>
+#   <Link rel="describedby" href="http://host.example/endpoint"/>
+#   <Link rel="feed" template="http://host.example/descriptor?q={%id}"/>
+#   <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
+#   <Link href="http://www.example.com/linkeater/oexchange.xrd" rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml"/>
+#  </XRD>
+# eos
+#     doc = Discodactyl::JRD::Document.parse jrd_str
+#
+#     link = "<Link rel='http://oexchange.org/spec/0.8/rel/user-target' type='application/xrd+xml' href='updated' />"
+#
+#     doc.raw.xpath('//xrd:Link',Discodactyl::XRD::XMLNS).after(link)
+#
+#     expected =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#   <Link rel="webfinger" href="http://host.example/endpoint"/>
+#   <Link rel="describedby" href="http://host.example/endpoint"/>
+#   <Link rel="feed" template="http://host.example/descriptor?q={%id}"/>
+#   <Link rel="describedby" template="http://host.example/descriptor?q={%id}"/>
+#   <Link href="updated" rel="http://oexchange.org/spec/0.8/rel/user-target" type="application/xrd+xml"/>
+#  </XRD>
+# eos
+#
+#     assert_equal expected, doc.to_s
+#   end
+
+#   def test_delete
+#     xrd_str =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#   <Link xml:id='1' href="http://example.com/" rel="user-target" type="application/xrd+xml"/>
+#  </XRD>
+# eos
+#     doc = Discodactyl::XRD::Document.parse xrd_str
+#
+#     link = "<Link rel='http://oexchange.org/spec/0.8/rel/user-target' type='application/xrd+xml' href='updated' />"
+#
+#     doc.raw.xpath('//xrd:Link',Discodactyl::XRD::XMLNS).after(link)
+#
+#     expected =<<eos
+# <?xml version=\"1.0\"?>
+# <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+#   <Subject>http://host.example/</Subject>
+#  </XRD>
+# eos
+#
+#     assert_equal expected, doc.to_s
+#     assert !doc.include?(link)
+#   end
+end
