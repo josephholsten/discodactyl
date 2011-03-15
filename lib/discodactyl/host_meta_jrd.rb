@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'active_support'
+require 'socket'
 require "discodactyl/uri_template"
 require "discodactyl/jrd"
 require 'discodactyl/log'

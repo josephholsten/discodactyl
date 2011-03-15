@@ -1,5 +1,6 @@
 require 'discodactyl/xrd'
 require 'open-uri'
+require 'socket'
 
 module Discodactyl # :nodoc
   # Convienient access to host metadata and individual resources controlled by 
@@ -15,6 +16,7 @@ module Discodactyl # :nodoc
       # Take a URI and retrieve its HostMeta document
       def from_uri(uri)
         uri = get_uri_from_uri(uri)
+        Discodactyl.log.debug("got xrd host-meta uri: #{uri}") if Discodactyl.log
         begin
           raw = uri.open
         rescue OpenURI::HTTPError => error

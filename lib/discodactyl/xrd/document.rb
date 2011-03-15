@@ -8,6 +8,7 @@ module XRD # :nodoc:
     class << self
       def parse(string)
         raw = Nokogiri::XML(string)
+        Discodactyl.log.debug("parsing xrd: #{raw}") if Discodactyl.log
         doc = self.new
 
         doc.raw = raw

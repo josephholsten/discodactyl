@@ -8,6 +8,7 @@ module JRD # :nodoc:
   class Document < Hash
     def self.parse(raw)
       begin
+        Discodactyl.log.debug("parsing jrd: #{raw}") if Discodactyl.log
         decoded = ActiveSupport::JSON.decode(raw)
       rescue => e
         raise ParseError.new(e.message)

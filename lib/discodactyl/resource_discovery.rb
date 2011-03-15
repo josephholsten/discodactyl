@@ -69,7 +69,7 @@ module Discodactyl # :nodoc:
           rescue => error
             Discodactyl.log.debug("Error parsing jrd host-meta: #{error}") if Discodactyl.log
           end
-          Discodactyl.log.debug("finding uris in host-meta") if Discodactyl.log
+          Discodactyl.log.debug("finding uris in jrd host-meta") if Discodactyl.log
           uris = host_meta.uris_by_rel(rel, params) if host_meta
         end
         
