@@ -13,7 +13,13 @@ discodactyl.gemspec
 lib/discodactyl.rb
 lib/discodactyl/acct_uri.rb
 lib/discodactyl/host_meta.rb
+lib/discodactyl/host_meta_jrd.rb
+lib/discodactyl/jrd.rb
+lib/discodactyl/jrd/document.rb
+lib/discodactyl/jrd/link.rb
+lib/discodactyl/known_rels.rb
 lib/discodactyl/link_header.rb
+lib/discodactyl/log.rb
 lib/discodactyl/resource_discovery.rb
 lib/discodactyl/uri_template.rb
 lib/discodactyl/xrd.rb
@@ -22,6 +28,8 @@ lib/discodactyl/xrd/link.rb
 test/test_acct_uri.rb
 test/test_helper.rb
 test/test_host_meta.rb
+test/test_host_meta_jrd.rb
+test/test_jrd_document.rb
 test/test_link_header.rb
 test/test_resource_discovery.rb
 test/test_uri_template.rb
