@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files = %w[ AUTHORS CHANGELOG COPYING INSTALL NEWS README.rdoc TODO ]
   spec.rdoc_options << "--charset=UTF-8" <<
                        "--title" << "Discodactyl Documentation" <<
-                       "--main"  << "README"
+                       "--main"  << "README.rdoc"
   spec.version = version
   spec.summary = spec.description.split(/\.\s+/).first
   spec.files = File.read("MANIFEST").split(/\r?\n\r?/)

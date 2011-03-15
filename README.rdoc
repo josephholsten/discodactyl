@@ -1,10 +1,10 @@
 = Discodactyl
 
-* Code :: http://github.com/josephholsten/discodactyl
-* Bugs :: http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
-* Tests :: http://discodactyl-ci.heroku.com/
-* Docs :: http://rdoc.info/projects/josephholsten/discodactyl
-* Author :: mailto:joseph@josephholsten.com
+Code :: http://github.com/josephholsten/discodactyl
+Bugs :: http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
+Tests :: http://discodactyl-ci.heroku.com/
+Docs :: http://rdoc.info/projects/josephholsten/discodactyl
+Author :: mailto:joseph@josephholsten.com
 
 == DESCRIPTION:
 
@@ -23,6 +23,17 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 * Yahoo 'webfinger' doesn't work. Sadly, they need to update their format to the most recent one.
 
 == SYNOPSIS:
+
+For command-line fiends:
+
+  $ webfinger bradfitz@gmail.com
+  Profile: http://www.google.com/profiles/bradfitz
+  Profile data: http://www-opensocial.googleusercontent.com/api/people/115863474911002159675/
+  describedby: http://www.google.com/profiles/bradfitz
+  Contacts: http://www-opensocial.googleusercontent.com/api/people/
+  Status: Hah... about 4 hours ago
+
+For ruby mongers:
 
   # All of WebFinger! In very few, if long and pointy, lines!
   require 'discodactyl'
