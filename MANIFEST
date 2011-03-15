@@ -5,7 +5,7 @@ Gemfile
 INSTALL
 MANIFEST
 NEWS
-README
+README.rdoc
 Rakefile
 TODO
 bin/webfinger

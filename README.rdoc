@@ -1,11 +1,10 @@
 = Discodactyl
 
-* http://dactylo.us
-* http://github.com/josephholsten/discodactyl
-* http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
-* http://discodactyl-ci.heroku.com/
-* http://rdoc.info/projects/josephholsten/discodactyl
-* mailto:joseph@josephholsten.com
+* Code :: http://github.com/josephholsten/discodactyl
+* Bugs :: http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
+* Tests :: http://discodactyl-ci.heroku.com/
+* Docs :: http://rdoc.info/projects/josephholsten/discodactyl
+* Author :: mailto:joseph@josephholsten.com
 
 == DESCRIPTION:
 
@@ -21,6 +20,7 @@ Discodactyl is an experimental toolkit for XRD service discovery documents and r
 * Minimal URI Template parsing and application.
 * Probably filled with bugs. Don't forget your bug powder.
 * JRD parsing, querying.
+* Yahoo 'webfinger' doesn't work. Sadly, they need to update their format to the most recent one.
 
 == SYNOPSIS:
 
@@ -49,7 +49,7 @@ This software is also available in a permissive license. Please contact Joseph H
 
 (The GNU Affero General Public License)
 
-Copyright (c) 2009, 2010 Joseph Anthony Pasquale Holsten
+Copyright (c) 2009, 2010, 2011 Joseph Anthony Pasquale Holsten
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
