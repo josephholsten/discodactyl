@@ -9,5 +9,5 @@ require 'discodactyl/uri_template'
 require 'discodactyl/xrd'
 
 module Discodactyl # :nodoc:
-  VERSION = '0.4.0'
+  VERSION = '0.4.1'
 end
