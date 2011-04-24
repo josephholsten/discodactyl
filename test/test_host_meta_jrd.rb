@@ -1,12 +1,22 @@
 #!/usr/bin/env ruby -w
 libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+testdir = File.expand_path('../../test', __FILE__)
+$LOAD_PATH.unshift(testdir) unless $LOAD_PATH.include?(testdir)
 
-require "test/unit"
-require "discodactyl/host_meta_jrd"
+require 'test/unit'
+require 'test_helper'
+require 'discodactyl/host_meta_jrd'
 require 'discodactyl/acct_uri'
 
 class TestHostMetaJRD < Test::Unit::TestCase
+  def setup
+    @json = <<JSON
+{ "links": {
+    "lrdd": [{
+      "href":"http://host.example/discovery.jrd" }]}}
+JSON
+  end
   def test_get_uri_from_host
     uri = 'host.example'
     expected = URI.parse 'http://host.example/.well-known/host-meta.json'
@@ -27,20 +37,16 @@ class TestHostMetaJRD < Test::Unit::TestCase
   
   def test_from_uri
     uri = URI.parse 'acct:josephholsten@localhost'
-    assert_equal({"links"=>{"lrdd"=>[{"href"=>"http://localhost/discovery.jrd"}]}}, Discodactyl::HostMetaJRD.from_uri(uri))
+    stub.instance_of(URI::Generic).open { StringIO.new @json }
+    assert_equal({'links'=>{'lrdd'=>[{'href'=>'http://host.example/discovery.jrd'}]}}, Discodactyl::HostMetaJRD.from_uri(uri))
   end
 
   def test_parse
-    json = <<JSON
-{ "links": {
-    "lrdd": [{
-      "href":"http://host.example/discovery.jrd" }]}}
-JSON
-    assert_equal({"links"=>{"lrdd"=>[{"href"=>"http://host.example/discovery.jrd"}]}}, Discodactyl::HostMetaJRD.parse(json))
+    assert_equal({'links'=>{'lrdd'=>[{'href'=>'http://host.example/discovery.jrd'}]}}, Discodactyl::HostMetaJRD.parse(@json))
   end
 
   def test_links_by_rel
-    jrd = Discodactyl::HostMetaJRD[{"links"=>{"lrdd"=>[{"href"=>"http://host.example/discovery.jrd"}]}}]
+    jrd = Discodactyl::HostMetaJRD[{'links'=>{'lrdd'=>[{'href'=>'http://host.example/discovery.jrd'}]}}]
     expected = [Discodactyl::JRD::Link.parse({'href'=>'http://host.example/discovery.jrd', 'rel' => 'lrdd'})]
     assert_equal(expected, jrd.links_by_rel('lrdd'))
   end
@@ -52,12 +58,12 @@ JSON
   end
 
   def test_uris_by_rel
-    jrd = Discodactyl::HostMetaJRD[{"links"=>{"lrdd"=>[{"href"=>"http://host.example/discovery.jrd"}]}}]
+    jrd = Discodactyl::HostMetaJRD[{'links'=>{'lrdd'=>[{'href'=>'http://host.example/discovery.jrd'}]}}]
     assert_equal(['http://host.example/discovery.jrd'], jrd.uris_by_rel('lrdd'))
   end
 
   def test_uris_by_rel_with_template
-    jrd = Discodactyl::HostMetaJRD[{"links"=>{"lrdd"=>[{"template"=>"http://host.example/{id}"}]}}]
+    jrd = Discodactyl::HostMetaJRD[{'links'=>{'lrdd'=>[{'template'=>'http://host.example/{id}'}]}}]
     assert_equal(['http://host.example/foo'], jrd.uris_by_rel('lrdd', 'id' => 'foo'))
   end
 end
