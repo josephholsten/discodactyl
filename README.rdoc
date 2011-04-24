@@ -2,8 +2,10 @@
 
 Discodacyl has had a good run, but everyone would be better served with a single awesome ruby webfinger client.
 
-So today I'm deprecating discodactyl in favor of [redfinger](https://github.com/intridea/redfinger). It's lacking a few things, but I hope to get those added soon.
+So today I'm deprecating discodactyl in favor of redfinger[https://github.com/intridea/redfinger]. It's lacking a few things, but I hope to get those added soon.
 
 So long, and thanks for all the salmon!
+
 --
+
 http://josephholsten.com
