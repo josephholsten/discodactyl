@@ -1,5 +1,8 @@
 #!/usr/bin/env rake
 
+require 'bundler'
+Bundler.setup
+
 require "rake/testtask"
 Rake::TestTask.new do |test|
   test.test_files = Dir['test/**/test_*.rb']
