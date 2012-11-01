@@ -1,11 +1,76 @@
-= Discodactyl is going away
+= Discodactyl
 
-Discodacyl has had a good run, but everyone would be better served with a single awesome ruby webfinger client.
+Code :: http://github.com/josephholsten/discodactyl
+Bugs :: http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
+Tests :: http://discodactyl-ci.heroku.com/
+Docs :: http://rdoc.info/projects/josephholsten/discodactyl
+Author :: mailto:joseph@josephholsten.com
 
-So today I'm deprecating discodactyl in favor of redfinger[https://github.com/intridea/redfinger]. It's lacking a few things, but I hope to get those added soon.
+== DESCRIPTION:
 
-So long, and thanks for all the salmon!
+Discodactyl is an experimental toolkit for XRD service discovery documents and related protocols. It includes implementations of XRD URITemplate Link-Patterns, basic site-meta support, HTTP Link header parsing, acct: URIs and a webfinger poking stick.
 
---
+== FEATURES/PROBLEMS:
 
-http://josephholsten.com
+* Webfinger client.
+* XRD parsing, querying and modification.
+* LRDD discovery.
+* HTTP Link header parsing.
+* acct: URI parsing.
+* Minimal URI Template parsing and application.
+* Probably filled with bugs. Don't forget your bug powder.
+* JRD parsing, querying.
+* Yahoo 'webfinger' doesn't work. Sadly, they need to update their format to the most recent one.
+
+== SYNOPSIS:
+
+For command-line fiends:
+
+  $ webfinger bradfitz@gmail.com
+  Profile: http://www.google.com/profiles/bradfitz
+  Profile data: http://www-opensocial.googleusercontent.com/api/people/115863474911002159675/
+  describedby: http://www.google.com/profiles/bradfitz
+  Contacts: http://www-opensocial.googleusercontent.com/api/people/
+  Status: Hah... about 4 hours ago
+
+For ruby mongers:
+
+  # All of WebFinger! In very few, if long and pointy, lines!
+  require 'discodactyl'
+
+  acct = URI.parse 'acct:bradfitz@gmail.com'
+
+  webfinger_uris = Discodactyl::ResourceDiscovery.get_uris_by_rel(acct, 'lrdd', 'uri' => acct)
+  disco_doc = Discodactyl::XRD::Document.parse(open(webfinger_uris.first))
+
+== REQUIREMENTS:
+
+* nokogiri 1.4
+* actionpack 2.3
+* feedzirra 0.0.23
+* mofo 0.2
+
+== INSTALLING:
+
+See the INSTALL file for details.
+
+== LICENSE:
+
+This software is also available in a permissive license. Please contact Joseph Holsten <joseph@josephholsten.com> for more information.
+
+(The GNU Affero General Public License)
+
+Copyright (c) 2009, 2010, 2011 Joseph Anthony Pasquale Holsten
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
