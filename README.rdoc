@@ -1,7 +1,7 @@
 = Discodactyl
 
 Code :: http://github.com/josephholsten/discodactyl
-Bugs :: http://josephholsten.lighthouseapp.com/projects/36040-discodactyl
+Bugs :: http://github.com/josephholsten/discodactyl/issues
 Tests :: http://discodactyl-ci.heroku.com/
 Docs :: http://rdoc.info/projects/josephholsten/discodactyl
 Author :: mailto:joseph@josephholsten.com
