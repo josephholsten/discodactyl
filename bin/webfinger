@@ -3,13 +3,14 @@ libdir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'discodactyl'
+require 'discodactyl/cli'
 require 'open-uri'
 require 'action_view'
 require 'prism'
 require 'feedzirra'
 require 'logger'
 
-log = Logger.new(STDOUT)
+log = Logger.new(STDERR)
 Discodactyl.log = log
 
 if ARGV.length == 0
@@ -76,45 +77,13 @@ else
   log.warn("Disco doc didn't list a subject. Assuming everything is well.")
 end
 
-def format_address(adr)
-  segments = []
-  segments << adr.street_address if adr.properties.include?(:street_address)
-  segments << adr.locality if adr.properties.include?(:locality)
-  segments << adr.region if adr.properties.include?(:region)
-  segments << adr.postal_code if adr.properties.include?(:postal_code)
-  segments << adr.country_name if adr.properties.include?(:country_name)
-  segments.join(' ')
-end
-
-hcard_uri = disco.uris_by_rel('http://microformats.org/profile/hcard').first
-hcards = Prism.find(hcard_uri, :hcard)
-hcards.each do |hcard|
-  if hcard
-    puts "Name: #{hcard.fn.gsub(/\s+/, ' ')}" if hcard.properties.include?(:fn)
-    puts "Title: #{hcard.title}" if hcard.properties.include?(:title)
-    puts "Organization: #{hcard.org}" if hcard.properties.include?(:org)
-    puts "Address: #{format_address(hcard.adr)}" if hcard.properties.include?(:adr)
-  end
-end
-
 links_with_titles = disco.links.select{|l| l.title.present? }
 links_with_titles.each do |link|
   puts "#{link.title}: #{link.to_uri}"
 end
 
-Discodactyl::KNOWN_RELS.each do |name, rel|
+Discodactyl::KNOWN_RELS.each do |rel, name|
   uri = disco.uris_by_rel(rel).first
-  puts "#{name}: #{uri}" if uri
-end
-
-activities = disco.uris_by_rel('http://schemas.google.com/g/2010#updates-from').first
-if activities
-  feed = Feedzirra::Feed.fetch_and_parse(activities)
-  entry = feed.entries.first
-  if entry
-    include ActionView::Helpers::DateHelper
-    silence_warnings do
-      puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago"
-    end
-  end
+  formatter = Discodactyl::CLI::Format.for_rel(rel)
+  formatter.call(uri, STDOUT)
 end
