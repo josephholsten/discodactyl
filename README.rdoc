@@ -1,6 +1,7 @@
 = Discodactyl
 
 {<img src="https://secure.travis-ci.org/josephholsten/discodactyl.png" alt="Build Status" />}[http://travis-ci.org/josephholsten/discodactyl] | {<img src="https://codeclimate.com/badge.png" />}[https://codeclimate.com/github/josephholsten/discodactyl] | {<img src="https://gemnasium.com/josephholsten/discodactyl.png" alt="Dependency Status" />}[https://gemnasium.com/josephholsten/discodactyl]
+
 {Docs}[http://rdoc.info/projects/josephholsten/discodactyl] | {Code}[https:/github.com/josephholsten/discodactyl] | {Bugs}[http://github.com/josephholsten/discodactyl/issues]
 
 == DESCRIPTION:
