@@ -9,8 +9,11 @@ class Format
     when 'http://schemas.google.com/g/2010#updates-from' then
       lambda {|uri, io| Discodactyl::CLI::Format.activities_from_uri(uri, io) }
     else
-      name = Discodactyl::KNOWN_RELS[rel]
-      lambda {|uri, io| io.puts "#{name}: #{uri}" if uri }
+      if name = Discodactyl::KNOWN_RELS[rel]
+        lambda {|uri, io| io.puts "#{name}: #{uri}" if uri }
+      else
+        lambda {|uri, io| }
+      end
     end
   end
 
@@ -26,13 +29,14 @@ class Format
 
   def self.hcard_from_uri(uri, io)
     begin
-      hcards = Prism.find(uri, :hcard)
-      hcards.each do |hcard|
-        if hcard
-          io << "Name: #{hcard.fn.gsub(/\s+/, ' ')}\n" if hcard.properties.include?(:fn)
-          io << "Title: #{hcard.title}\n" if hcard.properties.include?(:title)
-          io << "Organization: #{hcard.org}\n" if hcard.properties.include?(:org)
-          io << "Address: #{format_hcard_adr(hcard.adr)}\n" if hcard.properties.include?(:adr)
+      if hcards = Prism.find(uri, :hcard)
+        hcards.each do |hcard|
+          if hcard
+            io << "Name: #{hcard.fn.gsub(/\s+/, ' ')}\n" if hcard.properties.include?(:fn)
+            io << "Title: #{hcard.title}\n" if hcard.properties.include?(:title)
+            io << "Organization: #{hcard.org}\n" if hcard.properties.include?(:org)
+            io << "Address: #{hcard_adr(hcard.adr)}\n" if hcard.properties.include?(:adr)
+          end
         end
       end
     rescue RuntimeError => e

@@ -25,16 +25,6 @@ Reference Specs
 * link header http://tools.ietf.org/html/rfc5988
 * versioning-rels http://tools.ietf.org/html/rfc5829
 
-Interesting webfinger variants
-* joseph@josephholsten.com
-* romeda@gmail.com
-* will@willmeyer.com
-* dclinton@gmail.com
-* bradfitz@gmail.com
-* dclinton@yahoo.com
-* beestage@yahoo.com
-* gffletch@aol.com
-
 other clients
 * webfingerclient-dclinton.appspot.com/
 * webfinger.org/lookup/darron@froese.org
