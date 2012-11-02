@@ -37,7 +37,7 @@ JSON
   
   def test_from_uri
     uri = URI.parse 'acct:josephholsten@localhost'
-    stub.instance_of(URI::Generic).open { StringIO.new @json }
+    URI::HTTP.any_instance.stubs(:open).returns(StringIO.new(@json))
     assert_equal({'links'=>{'lrdd'=>[{'href'=>'http://host.example/discovery.jrd'}]}}, Discodactyl::HostMetaJRD.from_uri(uri))
   end
 

@@ -20,6 +20,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'actionpack', '~>3.0.0'
   spec.add_runtime_dependency 'feedzirra', '~>0.0.23'
   spec.add_runtime_dependency 'prism', '~>0.1.0'
-  spec.add_development_dependency 'rr', '~>0.10.11'
+  spec.add_development_dependency 'mocha', '~>0.12.7'
   spec.add_development_dependency 'rake', '~>0.8.7'
 end

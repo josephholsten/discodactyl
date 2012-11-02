@@ -1,4 +1,6 @@
 require "test/unit"
+require "mocha"
+
 module Test::Unit::Assertions
   def assert_length(expected, enum, message = nil)
     message = build_message message, '<?> is not length <?>', enum, expected
@@ -9,9 +11,4 @@ module Test::Unit::Assertions
     message = build_message message, '<?> does not include <?>.', enum, atom
     assert enum.include?(atom), message
   end
-end
-
-class Test::Unit::TestCase
-  require 'rr'
-  include RR::Adapters::TestUnit
 end
