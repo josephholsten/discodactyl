@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'discodactyl'
 require 'open-uri'
 require 'action_view'
-require 'mofo'
+require 'prism'
 require 'feedzirra'
 require 'logger'
 
@@ -76,12 +76,16 @@ else
   log.warn("Disco doc didn't list a subject. Assuming everything is well.")
 end
 
+
+
 hcard_uri = disco.uris_by_rel('http://microformats.org/profile/hcard').first
-hcard = hCard.find(:first => hcard_uri) rescue
-if hcard
-  puts "Name: #{hcard.fn.gsub(/\s+/, ' ')}" if hcard.properties.include?('fn')
-  puts "Title: #{hcard.title}" if hcard.properties.include?('title')
-  puts "Organization: #{hcard.org}" if hcard.properties.include?('org')
+hcards = Prism.find(hcard_uri, :hcard)
+hcards.each do |hcard|
+  if hcard
+    puts "Name: #{hcard.fn.gsub(/\s+/, ' ')}" if hcard.properties.include?(:fn)
+    puts "Title: #{hcard.title}" if hcard.properties.include?(:title)
+    puts "Organization: #{hcard.org}" if hcard.properties.include?(:org)
+  end
 end
 
 links_with_titles = disco.links.select{|l| l.title.present? }
