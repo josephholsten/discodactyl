@@ -76,7 +76,15 @@ else
   log.warn("Disco doc didn't list a subject. Assuming everything is well.")
 end
 
-
+def format_address(adr)
+  segments = []
+  segments << adr.street_address if adr.properties.include?(:street_address)
+  segments << adr.locality if adr.properties.include?(:locality)
+  segments << adr.region if adr.properties.include?(:region)
+  segments << adr.postal_code if adr.properties.include?(:postal_code)
+  segments << adr.country_name if adr.properties.include?(:country_name)
+  segments.join(' ')
+end
 
 hcard_uri = disco.uris_by_rel('http://microformats.org/profile/hcard').first
 hcards = Prism.find(hcard_uri, :hcard)
@@ -85,6 +93,7 @@ hcards.each do |hcard|
     puts "Name: #{hcard.fn.gsub(/\s+/, ' ')}" if hcard.properties.include?(:fn)
     puts "Title: #{hcard.title}" if hcard.properties.include?(:title)
     puts "Organization: #{hcard.org}" if hcard.properties.include?(:org)
+    puts "Address: #{format_address(hcard.adr)}" if hcard.properties.include?(:adr)
   end
 end
 
