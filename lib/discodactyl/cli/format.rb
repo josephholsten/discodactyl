@@ -29,6 +29,7 @@ class Format
 
   def self.hcard_from_uri(uri, io)
     begin
+      Discodactyl.log.debug("hCard lookup for #{uri}") if Discodactyl.log
       if hcards = Prism.find(uri, :hcard)
         hcards.each do |hcard|
           if hcard
@@ -40,17 +41,26 @@ class Format
         end
       end
     rescue RuntimeError => e
-      Discodactyl.log.warn(e.message)
-      Discodactyl.log.debug(e)
+      Discodactyl.log.warn(e.message) if Discodactyl.log
+      Discodactyl.log.debug(e) if Discodactyl.log
     end
   end
 
   def self.activities_from_uri(uri, io)
-    if uri && feed = Feedzirra::Feed.fetch_and_parse(uri)&& entry = feed.entries.first
-      include ActionView::Helpers::DateHelper
-      silence_warnings do
-        io.puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago"
+    Discodactyl.log.debug("Activity feed lookup for #{uri}") if Discodactyl.log
+    begin
+      if uri && (feed = Feedzirra::Feed.fetch_and_parse(uri)) && feed.respond_to?(:entries)
+        Array(feed.entries).each do |entry|
+          include ActionView::Helpers::DateHelper
+          silence_warnings do
+            io.puts "Status: #{Loofah::Helpers.strip_tags(entry.content)} #{time_ago_in_words(entry.published)} ago"
+          end
+        end
+      else
+        Discodactyl.log.debug("Failed activity feed lookup with uri: #{uri.inspect} feed: #{feed.inspect}") if Discodactyl.log
       end
+    rescue
+      Discodactyl.log.warn($!) if Discodactyl.log
     end
   end
 
