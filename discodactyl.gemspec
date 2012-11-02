@@ -16,10 +16,10 @@ Gem::Specification.new do |spec|
   spec.files = File.read("MANIFEST").split(/\r?\n\r?/)
   spec.executables = spec.files.grep(/^bin/) { |f| File.basename(f) }
   spec.test_files = spec.files.grep(/^test\/.*test_.*\.rb$/)
-  spec.add_runtime_dependency 'nokogiri', '~>1.4.2'
-  spec.add_runtime_dependency 'actionpack', '~>3.0.0'
-  spec.add_runtime_dependency 'feedzirra', '~>0.0.23'
-  spec.add_runtime_dependency 'prism', '~>0.1.0'
-  spec.add_development_dependency 'mocha', '~>0.12.7'
-  spec.add_development_dependency 'rake', '~>0.8.7'
+  spec.add_runtime_dependency 'nokogiri', '>= 1.4.2'
+  spec.add_runtime_dependency 'actionpack', '>= 3.0.8'
+  spec.add_runtime_dependency 'feedzirra', '>= 0.0.22', '< 0.0.31'
+  spec.add_runtime_dependency 'prism', '>= 0.1.0'
+  spec.add_development_dependency 'mocha', '>= 0.12.7'
+  spec.add_development_dependency 'rake', '>= 0.9.2.2'
 end
