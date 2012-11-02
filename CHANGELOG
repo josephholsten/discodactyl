@@ -1,4 +1,74 @@
+2012-11-02  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl/cli.rb, lib/discodactyl/cli/format.rb: add
+	* bin/webfinger: extract formatting
+
+	* lib/discodactyl/known_rels.rb (Discodactyl::KNOWN_RELS): invert.
+	This is a breaking change.
+
+2012-11-01  Joseph Holsten  <joseph@josephholsten.com>
+
+	* discodactyl.gemspec: replace rr with mocha
+
+	* bin/webfinger: format hcard addresses
+
+	* bin/webfinger, discodactyl.gemspec: replace mofo with prism
+
+	* Come out of retirement
+
+2011-04-24  Joseph Holsten  <joseph@josephholsten.com>
+
+	* Rakefile: fix bundler loading for travis
+
+	* Retire the project
+
+2011-03-14  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl/host_meta.rb, lib/discodactyl/host_meta_jrd.rb
+	lib/discodactyl/jrd/document.rb, lib/discodactyl/resource_discovery.rb
+	lib/discodactyl/xrd/document.rb: improve logging
+
+	* lib/discodactyl/jrd/link.rb (Discodactyl::JRD::Link#title,
+	Discodactyl::JRD::Link#title=)
+	* lib/discodactyl/xrd/link.rb (Discodactyl::XRD::Link#title,
+	Discodactyl::XRD::Link#title=): add
+
+	* lib/discodactyl/resource_discovery.rb
+	(Discodactyl::ResourceDiscovery::get_uris_by_rel): handle missing jrd
+	hostmeta
+
+	* lib/discodactyl.rb: bump patch version
+	* discodactyl.gemspec: update dependencies
+
+2010-11-17  Joseph Holsten  <joseph@josephholsten.com>
+
+	* lib/discodactyl.rb: bump minor version
+
+	* lib/discodactyl/log.rb: add
+	* bin/webfinger, lib/discodactyl/acct_uri.rb
+	lib/discodactyl/host_meta.rb, lib/discodactyl/resource_discovery.rb:
+	add logging. improve error handling.
+
+	* lib/discodactyl/jrd.rb, lib/discodactyl/jrd/link.rb
+	lib/discodactyl/host_meta_jrd.rb, lib/discodactyl/jrd/document.rb: add
+	* lib/discodactyl/resource_discovery.rb: add jrd support.
+
+	* lib/discodactyl/known_rels.rb: add
+
+	* lib/discodactyl/xrd/document.rb (Discodactyl::XRD::Document#rels)
+	(Discodactyl::XRD::Document#find_all_links_by_rel)
+	(Discodactyl::XRD::Document#subject): add
+
+	* lib/discodactyl/xrd/link.rb, lib/discodactyl/link_header.rb: replace
+	returning() with #tap().
+
+2010-07-22  Joseph Holsten  <joseph@josephholsten.com>
+
+	* bin/webfinger: silence i18n warnings.
+
 2010-07-08  Joseph Holsten  <joseph@josephholsten.com>
+
+	* release 0.3.0
 
 	* bin/webfinger: display any hcard, openid, profile, contacts and
 	status info found. Backwards incompatible with the useless behavior of
