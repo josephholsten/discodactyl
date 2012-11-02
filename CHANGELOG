@@ -1,5 +1,10 @@
 2012-11-02  Joseph Holsten  <joseph@josephholsten.com>
 
+	* discodactyl.gemspec, lib/discodactyl/cli/format.rb
+	(Discodactyl::CLI::Format::activities_from_uri): support latest feedzirra
+
+	* discodactyl.gemspec: loosen up dependencies
+
 	* lib/discodactyl/cli.rb, lib/discodactyl/cli/format.rb: add
 	* bin/webfinger: extract formatting
 
