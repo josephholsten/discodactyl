@@ -1,8 +1,8 @@
 = Discodactyl
 
+{<img src="https://secure.travis-ci.org/josephholsten/discodactyl.png" alt="Build Status" />}[http://travis-ci.org/josephholsten/discodactyl]
 Code :: http://github.com/josephholsten/discodactyl
 Bugs :: http://github.com/josephholsten/discodactyl/issues
-Tests :: http://discodactyl-ci.heroku.com/
 Docs :: http://rdoc.info/projects/josephholsten/discodactyl
 Author :: mailto:joseph@josephholsten.com
 
